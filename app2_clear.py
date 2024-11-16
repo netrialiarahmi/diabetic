@@ -227,20 +227,113 @@ def halaman_1():
         "Analisis Deformitas": {
             "icon": "👣",
             "description": "Evaluasi struktur kaki dan identifikasi area tekanan berlebih."
+        },
+        "Inspeksi Luka/Ulkus": {
+            "icon": "🔬",
+            "description": "Pemeriksaan keberadaan luka, tanda-tanda penyembuhan atau perburukan, kondisi jaringan sekitar, dan indikator infeksi."
+        },
+        "Kondisi Kuku": {
+            "icon": "💅",
+            "description": "Evaluasi warna, tekstur, pola pertumbuhan, tanda infeksi, dan abnormalitas ketebalan kuku."
         }
     }
     
-    cols = st.columns(3)
-    for idx, (category, info) in enumerate(assessment_categories.items()):
-        with cols[idx]:
+    # Create rows of 3 columns each
+    for i in range(0, len(assessment_categories), 3):
+        cols = st.columns(3)
+        # Get subset of categories for current row
+        current_categories = dict(list(assessment_categories.items())[i:i+3])
+        
+        for idx, (category, info) in enumerate(current_categories.items()):
+            with cols[idx]:
+                st.markdown(f"""
+                    <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; height: 100%;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">{info['icon']}</div>
+                        <h3 style="color: #0d6efd; font-size: 1.2rem; margin-bottom: 1rem;">{category}</h3>
+                        <p style="color: #666; font-size: 0.9rem;">{info['description']}</p>
+                    </div>
+                """, unsafe_allow_html=True)
+    # Personalized Recommendations Section
+    st.markdown("<h2 style='text-align: center; color: #0d6efd; margin: 2rem 0;'>Rekomendasi Personal</h2>", unsafe_allow_html=True)
+    
+    recommendations = {
+        "Tindakan Segera": {
+            "icon": "🚨",
+            "description": "Identifikasi kebutuhan perawatan mendesak dan tindakan medis yang diperlukan",
+            "details": [
+                "Evaluasi tingkat kegawatan berdasarkan kondisi luka",
+                "Penanganan khusus sesuai tingkat keparahan",
+                "Kebutuhan konsultasi dengan profesional medis"
+            ],
+            "dfu_context": "Deteksi dini DFU dapat mencegah amputasi hingga 85% kasus. Tindakan segera saat tanda awal muncul sangat kritis."
+        },
+        "Protokol Perawatan Harian": {
+            "icon": "🧼",
+            "description": "Panduan perawatan kaki harian yang disesuaikan dengan kondisi Anda",
+            "details": [
+                "Prosedur pembersihan yang aman dan efektif",
+                "Rekomendasi pelembab khusus diabetik",
+                "Rutinitas pemeriksaan mandiri",
+                "Metode pengurangan tekanan pada area berisiko"
+            ],
+            "dfu_context": "Perawatan kaki yang tepat dapat menurunkan risiko DFU sebesar 50%. Rutinitas harian yang konsisten adalah kunci pencegahan."
+        },
+        "Strategi Pencegahan Risiko": {
+            "icon": "🛡️",
+            "description": "Langkah-langkah pencegahan yang disesuaikan dengan faktor risiko personal",
+            "details": [
+                "Rekomendasi alas kaki khusus diabetik",
+                "Penyesuaian aktivitas fisik",
+                "Pertimbangan lingkungan",
+                "Tindakan pencegahan spesifik"
+            ],
+            "dfu_context": "77% kasus DFU dapat dicegah dengan strategi pencegahan yang tepat dan disesuaikan dengan kondisi pasien."
+        },
+        "Protokol Pemantauan": {
+            "icon": "📊",
+            "description": "Sistem pemantauan berkala untuk mencegah komplikasi",
+            "details": [
+                "Checklist pemeriksaan harian",
+                "Tanda-tanda bahaya yang perlu diwaspadai",
+                "Indikator untuk mencari bantuan medis",
+                "Jadwal kontrol rutin"
+            ],
+            "dfu_context": "Pemantauan rutin dapat mendeteksi 89% tanda awal DFU sebelum berkembang menjadi kondisi serius."
+        },
+        "Penyesuaian Gaya Hidup": {
+            "icon": "🌟",
+            "description": "Rekomendasi perubahan gaya hidup untuk mendukung kesehatan kaki",
+            "details": [
+                "Program olahraga yang aman",
+                "Pertimbangan diet khusus",
+                "Modifikasi aktivitas sehari-hari",
+                "Langkah-langkah perlindungan"
+            ],
+            "dfu_context": "Penyesuaian gaya hidup yang tepat dapat menurunkan risiko DFU hingga 60% dan mempercepat proses penyembuhan."
+        }
+    }
+    
+    for category, info in recommendations.items():
+        with st.expander(f"{info['icon']} {category}"):
             st.markdown(f"""
-                <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; height: 100%;">
-                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">{info['icon']}</div>
-                    <h3 style="color: #0d6efd; font-size: 1.2rem; margin-bottom: 1rem;">{category}</h3>
-                    <p style="color: #666; font-size: 0.9rem;">{info['description']}</p>
+                <div style="padding: 1.5rem; background-color: #f8f9fa; border-radius: 1rem;">
+                    <h3 style="color: #0d6efd; margin-bottom: 1rem;">{category}</h3>
+                    <p style="color: #333; margin-bottom: 1rem;">{info['description']}</p>
+                    
+                    <h4 style="color: #0d6efd; margin-top: 1.5rem;">Komponen Utama:</h4>
+                    <ul style="color: #333; margin-bottom: 1.5rem;">
+                        {' '.join(f'<li>{detail}</li>' for detail in info['details'])}
+                    </ul>
+                    
+                    <div style="background-color: #e7f0ff; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem;">
+                        <h4 style="color: #0d6efd; margin-bottom: 0.5rem;">Kaitan dengan DFU:</h4>
+                        <p style="color: #333;">{info['dfu_context']}</p>
+                    </div>
                 </div>
             """, unsafe_allow_html=True)
 
+    # Visual Separator
+    st.markdown("<hr style='margin: 2rem 0;'>", unsafe_allow_html=True)
     # Call-to-Action Section
     st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown("""
