@@ -148,29 +148,178 @@ class MobileNetV3Model(nn.Module):
 
 # Define functions for each page
 def halaman_1():
+    # Bagian utama halaman
     st.markdown('<div class="main-container">', unsafe_allow_html=True)
     
-    st.markdown('<div class="main-title">Deskripsi DFU dan Edukasi</div>', unsafe_allow_html=True)
-    display_responsive_image("DFU.png", "Contoh Diabetic Foot Ulcer (DFU)")
-    
-    st.markdown('<div class="section-title">Apa itu Diabetic Foot Ulcer (DFU)?</div>', unsafe_allow_html=True)
+    # Selamat Datang
+    st.markdown('<div class="main-title">Selamat Datang di Advanced Diabetic Foot Analysis System</div>', unsafe_allow_html=True)
     st.markdown(
         """
         <div class="section-content">
-        Diabetic Foot Ulcer (DFU) adalah luka pada kaki yang disebabkan oleh diabetes yang dapat menyebabkan infeksi
-        serius jika tidak ditangani dengan baik. Pengobatan dan pencegahan yang tepat dapat mengurangi risiko
-        komplikasi lebih lanjut.
+        Selamat datang di platform yang dirancang untuk membantu Anda menjaga kesehatan kaki dengan cara yang sederhana namun efektif. Kami memahami bahwa bagi Anda yang hidup dengan diabetes, menjaga kesehatan kaki bisa menjadi tantangan. Dengan sistem ini, kami ingin memberikan dukungan nyata, membantu Anda mendeteksi risiko lebih awal, memahami kondisi kaki Anda, dan memberikan solusi yang sesuai untuk kebutuhan Anda. <strong>Advanced Diabetic Foot Analysis System</strong> adalah mitra Anda untuk memastikan setiap langkah tetap aman.
         </div>
         """,
         unsafe_allow_html=True
     )
     
-    st.markdown('<div class="section-title">Peta Tekanan Kaki untuk Pencegahan DFU</div>', unsafe_allow_html=True)
+    # Menampilkan gambar DFU
+    display_responsive_image("DFU.png", "Contoh Perkembangan Diabetic Foot Ulcer (DFU)")
+
+    # Penjelasan Pentingnya Analisis
+    st.markdown('<div class="section-title">Mengapa Penting untuk Menganalisis Kaki Anda?</div>', unsafe_allow_html=True)
     st.markdown(
         """
         <div class="section-content">
-        Peta tekanan kaki dapat membantu mendeteksi area dengan tekanan tinggi pada kaki, yang mungkin menunjukkan risiko lebih tinggi terhadap ulserasi pada individu dengan diabetes. 
-        Pemantauan rutin dan langkah-langkah pencegahan dapat membantu mengurangi kemungkinan berkembangnya DFU.
+        Kaki sering menjadi bagian tubuh yang diabaikan, tetapi bagi penderita diabetes, kaki adalah "alarm kesehatan" yang tidak boleh diabaikan. Perubahan kecil pada kulit, aliran darah, atau struktur kaki dapat menjadi tanda awal komplikasi serius seperti luka yang sulit sembuh, infeksi, atau bahkan risiko amputasi. Kami ingin membantu Anda memahami pentingnya menjaga kaki dengan lebih baik melalui analisis ini.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    # Analisis Terperinci
+    st.markdown('<div class="section-title">Indikator Utama yang Kami Analisis</div>', unsafe_allow_html=True)
+
+    # Skin Health Assessment
+    st.markdown('<div class="subsection-title">a. Skin Health Assessment</div>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="section-content">
+        <strong>Kenapa Penting?</strong> Kulit adalah pelindung utama tubuh. Ketika kulit tidak dalam kondisi baik, seperti terlalu kering, retak, atau memiliki kalus, risiko luka meningkat. Pada penderita diabetes, luka kecil bisa berkembang menjadi masalah serius karena sering kali tidak terasa.
+        <br><strong>Apa yang Diperiksa?</strong>
+        <ul>
+            <li><strong>Warna Kulit</strong>: Apakah ada kemerahan (tekanan atau peradangan) atau pucat (gangguan sirkulasi)?</li>
+            <li><strong>Tekstur Kulit</strong>: Apakah kulit terlalu halus (tanda neuropati) atau terlalu kering (berisiko retak)?</li>
+            <li><strong>Kehadiran Luka Kecil atau Kalus</strong>: Luka kecil atau penebalan kulit akibat tekanan tinggi sering kali menjadi tanda risiko yang harus segera diatasi.</li>
+        </ul>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Circulation Indicators
+    st.markdown('<div class="subsection-title">b. Circulation Indicators</div>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="section-content">
+        <strong>Kenapa Penting?</strong> Sirkulasi darah yang baik adalah kunci penyembuhan luka. Ketika aliran darah terganggu, luka menjadi sulit sembuh dan risiko gangren meningkat. Perubahan suhu atau warna kulit adalah tanda-tanda awal yang perlu diperhatikan.
+        <br><strong>Apa yang Diperiksa?</strong>
+        <ul>
+            <li><strong>Pola Warna Kulit</strong>: Apakah ada warna pucat, kebiruan, atau kemerahan yang tidak wajar?</li>
+            <li><strong>Pembengkakan</strong>: Adakah area yang terlihat bengkak, yang bisa menunjukkan retensi cairan atau infeksi?</li>
+            <li><strong>Suhu Kulit</strong>: Apakah kaki terasa lebih dingin di area tertentu, tanda gangguan aliran darah?</li>
+        </ul>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Deformity Analysis
+    st.markdown('<div class="subsection-title">c. Deformity Analysis</div>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="section-content">
+        <strong>Kenapa Penting?</strong> Struktur kaki yang tidak seimbang dapat menyebabkan tekanan berlebih di area tertentu. Tekanan ini meningkatkan risiko luka, terutama pada titik-titik yang sering menerima beban saat berjalan.
+        <br><strong>Apa yang Diperiksa?</strong>
+        <ul>
+            <li><strong>Tekanan pada Kaki</strong>: Area mana yang menerima tekanan paling besar?</li>
+            <li><strong>Keselarasan Struktur</strong>: Adakah deformitas seperti jari kaki melengkung (hammertoe) atau bunion?</li>
+            <li><strong>Lengkungan Kaki</strong>: Apakah lengkungan terlalu datar atau terlalu tinggi sehingga memengaruhi distribusi tekanan?</li>
+        </ul>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Penjelasan Rekomendasi
+    st.markdown('<div class="section-title">Mengapa Rekomendasi Kami Terpersonalisasi?</div>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="section-content">
+        Setiap kaki memiliki cerita yang berbeda. Itulah mengapa rekomendasi kami dirancang secara khusus, berdasarkan kondisi kaki Anda. Kami ingin memastikan solusi yang diberikan benar-benar relevan dan tepat sasaran, membantu Anda menjaga kesehatan kaki dengan langkah yang mudah dan praktis.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Bagian a. Immediate Actions Required
+    st.markdown('<div class="subsection-title">a. Immediate Actions Required</div>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="section-content">
+        <strong>Kenapa Penting?</strong> Kadang-kadang, tindakan cepat diperlukan untuk mencegah masalah kecil berkembang menjadi kondisi serius.
+        <br><strong>Contoh Rekomendasi:</strong>
+        <ul>
+            <li>Membersihkan luka kecil dengan antiseptik dan menutupnya dengan balutan steril.</li>
+            <li>Menghindari tekanan langsung pada area yang terluka dengan menggunakan sepatu atau insole khusus.</li>
+            <li>Segera berkonsultasi dengan tenaga medis jika luka tidak sembuh dalam beberapa hari.</li>
+        </ul>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Bagian b. Daily Care Protocol
+    st.markdown('<div class="subsection-title">b. Daily Care Protocol</div>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="section-content">
+        <strong>Kenapa Penting?</strong> Rutinitas perawatan sederhana setiap hari dapat mencegah banyak masalah sebelum mereka muncul.
+        <br><strong>Contoh Rekomendasi:</strong>
+        <ul>
+            <li>Membersihkan kaki dengan air hangat, mengeringkan dengan sempurna, terutama di antara jari-jari.</li>
+            <li>Menggunakan pelembap untuk menjaga kulit tetap sehat, tetapi hindari area di antara jari.</li>
+            <li>Memeriksa kaki setiap hari untuk mendeteksi perubahan seperti luka, kemerahan, atau pembengkakan.</li>
+        </ul>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Bagian c. Risk Prevention Strategy
+    st.markdown('<div class="subsection-title">c. Risk Prevention Strategy</div>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="section-content">
+        <strong>Kenapa Penting?</strong> Mencegah lebih baik daripada mengobati. Strategi ini membantu Anda mengurangi risiko sebelum masalah muncul.
+        <br><strong>Contoh Rekomendasi:</strong>
+        <ul>
+            <li>Gunakan sepatu yang sesuai dengan ukuran dan bentuk kaki, dengan bantalan yang baik untuk mengurangi tekanan.</li>
+            <li>Hindari berjalan tanpa alas kaki, terutama di permukaan kasar atau panas.</li>
+            <li>Modifikasi aktivitas seperti mengurangi berdiri terlalu lama atau menggunakan alat bantu jika diperlukan.</li>
+        </ul>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Bagian d. Monitoring Protocol
+    st.markdown('<div class="subsection-title">d. Monitoring Protocol</div>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="section-content">
+        <strong>Kenapa Penting?</strong> Memantau kondisi kaki secara teratur membantu mendeteksi masalah sejak dini.
+        <br><strong>Contoh Rekomendasi:</strong>
+        <ul>
+            <li>Periksa kaki setiap hari untuk mencari tanda-tanda seperti luka, perubahan warna, atau pembengkakan.</li>
+            <li>Pastikan suhu kaki tidak berbeda drastis antara kaki kanan dan kiri.</li>
+            <li>Lakukan pemeriksaan rutin dengan podiatris setiap 6 bulan.</li>
+        </ul>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Bagian e. Lifestyle Adjustments
+    st.markdown('<div class="subsection-title">e. Lifestyle Adjustments</div>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="section-content">
+        <strong>Kenapa Penting?</strong> Perubahan kecil dalam gaya hidup dapat memberikan dampak besar pada kesehatan kaki Anda.
+        <br><strong>Contoh Rekomendasi:</strong>
+        <ul>
+            <li>Lakukan olahraga ringan seperti jalan kaki atau yoga untuk meningkatkan sirkulasi.</li>
+            <li>Konsumsi makanan sehat untuk menjaga kadar gula darah tetap stabil.</li>
+            <li>Hindari rokok dan alkohol, karena dapat memperburuk kerusakan saraf.</li>
+        </ul>
         </div>
         """,
         unsafe_allow_html=True
