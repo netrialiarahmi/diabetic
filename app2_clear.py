@@ -163,7 +163,7 @@ def halaman_1():
             </p>
         </div>
     """, height=250)
-
+    
     # Key Features Section using Columns
     components.html("<h2 style='text-align: center; color: #0d6efd; margin-bottom: 2rem;'>Fitur Utama</h2>", height=60)
     
@@ -176,7 +176,7 @@ def halaman_1():
                 <p style="color: #666;">Deteksi dini risiko komplikasi kaki diabetik menggunakan teknologi AI terkini.</p>
             </div>
         """, height=200)
-            
+                
     with col2:
         components.html("""
             <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
@@ -184,7 +184,7 @@ def halaman_1():
                 <p style="color: #666;">Lihat dan pahami kondisi kaki Anda melalui visualisasi data yang mudah dimengerti.</p>
             </div>
         """, height=200)
-            
+                
     with col3:
         components.html("""
             <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
