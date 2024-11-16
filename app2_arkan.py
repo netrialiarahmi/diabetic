@@ -475,57 +475,52 @@ def halaman_3():
     # Process Confidence column to numeric
     df['Confidence_Value'] = df['Confidence'].str.rstrip('%').astype(float)
 
-    # 1. Key Metrics Cards
-    st.markdown("### 📊 Statistik Utama")
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.markdown(
-            f"""
-            <div style="padding: 20px; border-radius: 10px; background-color: #f0f2f6; text-align: center;">
-                <h3 style="margin: 0; color: #1f77b4;">Total Pengunjung</h3>
-                <p style="font-size: 24px; margin: 10px 0;">{len(df)}</p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+# 1. Key Metrics Cards
+st.markdown("### 📊 Statistik Utama")
+col1, col2 = st.columns(2)
 
-    with col2:
-        diabetic_percent = (df['Prediction'] == 'Diabetic').mean() * 100
-        st.markdown(
-            f"""
-            <div style="padding: 20px; border-radius: 10px; background-color: #f0f2f6; text-align: center;">
-                <h3 style="margin: 0; color: #ff7f0e;">Persentase Diabetic</h3>
-                <p style="font-size: 24px; margin: 10px 0;">{diabetic_percent:.1f}%</p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+with col1:
+    st.markdown(
+        f"""
+        <div style="padding: 20px; border-radius: 10px; background-color: #f0f2f6; text-align: center;">
+            <h3 style="margin: 0; color: #1f77b4;">Total Pengunjung</h3>
+            <p style="font-size: 24px; margin: 10px 0;">{len(df)}</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    diabetic_percent = (df['Prediction'] == 'Diabetic').mean() * 100
+    st.markdown(
+        f"""
+        <div style="padding: 20px; border-radius: 10px; background-color: #f0f2f6; text-align: center;">
+            <h3 style="margin: 0; color: #ff7f0e;">Persentase Diabetic</h3>
+            <p style="font-size: 24px; margin: 10px 0;">{diabetic_percent:.1f}%</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-    with col3:
-        avg_confidence = df['Confidence_Value'].mean()
-        st.markdown(
-            f"""
-            <div style="padding: 20px; border-radius: 10px; background-color: #f0f2f6; text-align: center;">
-                <h3 style="margin: 0; color: #2ca02c;">Confidence Rata-rata</h3>
-                <p style="font-size: 24px; margin: 10px 0;">{avg_confidence:.1f}%</p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
-    with col4:
-        high_conf = (df['Confidence_Value'] > 95).sum()
-        st.markdown(
-            f"""
-            <div style="padding: 20px; border-radius: 10px; background-color: #f0f2f6; text-align: center;">
-                <h3 style="margin: 0; color: #d62728;">Confidence >95%</h3>
-                <p style="font-size: 24px; margin: 10px 0;">{high_conf}</p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
+with col2:
+    avg_confidence = df['Confidence_Value'].mean()
+    st.markdown(
+        f"""
+        <div style="padding: 20px; border-radius: 10px; background-color: #f0f2f6; text-align: center;">
+            <h3 style="margin: 0; color: #2ca02c;">Confidence Rata-rata</h3>
+            <p style="font-size: 24px; margin: 10px 0;">{avg_confidence:.1f}%</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    high_conf = (df['Confidence_Value'] > 95).sum()
+    st.markdown(
+        f"""
+        <div style="padding: 20px; border-radius: 10px; background-color: #f0f2f6; text-align: center;">
+            <h3 style="margin: 0; color: #d62728;">Confidence >95%</h3>
+            <p style="font-size: 24px; margin: 10px 0;">{high_conf}</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
     # 2. Advanced Visualizations Section
     st.markdown("### 📈 Visualisasi Data")
     
