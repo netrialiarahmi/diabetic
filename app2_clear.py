@@ -130,8 +130,6 @@ def preprocess_image(image):
     return torch.tensor(image, dtype=torch.float32)
 
 
-
-
 # MobileNetV3 Model Definition
 class MobileNetV3Model(nn.Module):
     def __init__(self, extractor_trainable: bool = True):
@@ -148,9 +146,6 @@ class MobileNetV3Model(nn.Module):
         x = torch.cat((x_left, x_right), dim=1)
         return self.fc(x)
 
-
-
-# Define functions for each page
 
 # Define functions for each page
 def halaman_1():
@@ -207,9 +202,9 @@ def halaman_1():
             </div>
         """, height=200)
     
-    # Interactive Information Sections
-    st.markdown("<br>", unsafe_allow_html=True)
-        
+    # Add extra space between Key Features and the DFU image
+    st.markdown("<br><br>", unsafe_allow_html=True)
+    
     # Example Image with Caption
     st.image("DFU.png", caption="Example of Diabetic Foot Ulcer (DFU) Progression", use_column_width=True)
     
