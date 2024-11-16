@@ -189,8 +189,8 @@ def halaman_1():
     with col2:
         components.html("""
             <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
-                <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">📊 Data Visualization</h3>
-                <p style="color: #666;">View and understand your foot condition through easy-to-understand data visualization.</p>
+                <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">📊 User Summary</h3>
+                <p style="color: #666;">View and understand user summary for the next advanced research purpose.</p>
             </div>
         """, height=200)
                 
