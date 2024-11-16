@@ -831,7 +831,7 @@ def halaman_3():
 # Define the option menu for navigation inside a full-width container
 selections = option_menu(
     menu_title=None,
-    options=['Home', "Real-Time Analysis", "Data Pengunjung"],
+    options=['Home', "Real-Time Analysis", "User Dashboard"],
     icons=['house-fill', "file-earmark-medical-fill", "people-fill"],
     menu_icon="cast",
     default_index=0,
@@ -874,5 +874,5 @@ if selections == "Home":
     halaman_1()
 elif selections == "Real-Time Analysis":
     halaman_2()
-elif selections == "Data Pengunjung":
+elif selections == "User Dashboard":
     halaman_3()
