@@ -148,184 +148,118 @@ class MobileNetV3Model(nn.Module):
 
 # Define functions for each page
 def halaman_1():
-    # Bagian utama halaman
-    st.markdown('<div class="main-container">', unsafe_allow_html=True)
+    # Hero Section with Custom Styling
+    st.markdown("""
+        <div style="padding: 2rem; background: linear-gradient(135deg, #0d6efd20 0%, #0d6efd05 100%); border-radius: 1rem; margin-bottom: 2rem;">
+            <h1 style="color: #0d6efd; font-size: 2.5rem; font-weight: bold; text-align: center; margin-bottom: 1rem;">
+                Advanced Diabetic Foot Analysis System
+            </h1>
+            <p style="font-size: 1.2rem; color: #333; text-align: center; max-width: 800px; margin: 0 auto;">
+                Selamat datang di platform yang dirancang khusus untuk membantu Anda menjaga kesehatan kaki dengan cara yang modern dan efektif.
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # Key Features Section using Columns
+    st.markdown("<h2 style='text-align: center; color: #0d6efd; margin-bottom: 2rem;'>Fitur Utama</h2>", unsafe_allow_html=True)
     
-    # Selamat Datang
-    st.markdown('<div class="main-title">Selamat Datang di Advanced Diabetic Foot Analysis System</div>', unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div class="section-content">
-        Selamat datang di platform yang dirancang untuk membantu Anda menjaga kesehatan kaki dengan cara yang sederhana namun efektif. Kami memahami bahwa bagi Anda yang hidup dengan diabetes, menjaga kesehatan kaki bisa menjadi tantangan. Dengan sistem ini, kami ingin memberikan dukungan nyata, membantu Anda mendeteksi risiko lebih awal, memahami kondisi kaki Anda, dan memberikan solusi yang sesuai untuk kebutuhan Anda. <strong>Advanced Diabetic Foot Analysis System</strong> adalah mitra Anda untuk memastikan setiap langkah tetap aman.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    col1, col2, col3 = st.columns(3)
     
-    # Menampilkan gambar DFU
-    display_responsive_image("DFU.png", "Contoh Perkembangan Diabetic Foot Ulcer (DFU)")
+    with col1:
+        st.markdown("""
+            <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
+                <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">🔍 Analisis Real-time</h3>
+                <p style="color: #666;">Deteksi dini risiko komplikasi kaki diabetik menggunakan teknologi AI terkini.</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+    with col2:
+        st.markdown("""
+            <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
+                <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">📊 Visualisasi Data</h3>
+                <p style="color: #666;">Lihat dan pahami kondisi kaki Anda melalui visualisasi data yang mudah dimengerti.</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+    with col3:
+        st.markdown("""
+            <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
+                <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">💡 Rekomendasi Personal</h3>
+                <p style="color: #666;">Dapatkan saran perawatan yang dipersonalisasi berdasarkan hasil analisis.</p>
+            </div>
+        """, unsafe_allow_html=True)
 
-    # Penjelasan Pentingnya Analisis
-    st.markdown('<div class="section-title">Mengapa Penting untuk Menganalisis Kaki Anda?</div>', unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div class="section-content">
-        Kaki sering menjadi bagian tubuh yang diabaikan, tetapi bagi penderita diabetes, kaki adalah "alarm kesehatan" yang tidak boleh diabaikan. Perubahan kecil pada kulit, aliran darah, atau struktur kaki dapat menjadi tanda awal komplikasi serius seperti luka yang sulit sembuh, infeksi, atau bahkan risiko amputasi. Kami ingin membantu Anda memahami pentingnya menjaga kaki dengan lebih baik melalui analisis ini.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-    # Analisis Terperinci
-    st.markdown('<div class="section-title">Indikator Utama yang Kami Analisis</div>', unsafe_allow_html=True)
-
-    # Skin Health Assessment
-    st.markdown('<div class="subsection-title">a. Skin Health Assessment</div>', unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div class="section-content">
-        <strong>Kenapa Penting?</strong> Kulit adalah pelindung utama tubuh. Ketika kulit tidak dalam kondisi baik, seperti terlalu kering, retak, atau memiliki kalus, risiko luka meningkat. Pada penderita diabetes, luka kecil bisa berkembang menjadi masalah serius karena sering kali tidak terasa.
-        <br><strong>Apa yang Diperiksa?</strong>
-        <ul>
-            <li><strong>Warna Kulit</strong>: Apakah ada kemerahan (tekanan atau peradangan) atau pucat (gangguan sirkulasi)?</li>
-            <li><strong>Tekstur Kulit</strong>: Apakah kulit terlalu halus (tanda neuropati) atau terlalu kering (berisiko retak)?</li>
-            <li><strong>Kehadiran Luka Kecil atau Kalus</strong>: Luka kecil atau penebalan kulit akibat tekanan tinggi sering kali menjadi tanda risiko yang harus segera diatasi.</li>
-        </ul>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # Circulation Indicators
-    st.markdown('<div class="subsection-title">b. Circulation Indicators</div>', unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div class="section-content">
-        <strong>Kenapa Penting?</strong> Sirkulasi darah yang baik adalah kunci penyembuhan luka. Ketika aliran darah terganggu, luka menjadi sulit sembuh dan risiko gangren meningkat. Perubahan suhu atau warna kulit adalah tanda-tanda awal yang perlu diperhatikan.
-        <br><strong>Apa yang Diperiksa?</strong>
-        <ul>
-            <li><strong>Pola Warna Kulit</strong>: Apakah ada warna pucat, kebiruan, atau kemerahan yang tidak wajar?</li>
-            <li><strong>Pembengkakan</strong>: Adakah area yang terlihat bengkak, yang bisa menunjukkan retensi cairan atau infeksi?</li>
-            <li><strong>Suhu Kulit</strong>: Apakah kaki terasa lebih dingin di area tertentu, tanda gangguan aliran darah?</li>
-        </ul>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # Deformity Analysis
-    st.markdown('<div class="subsection-title">c. Deformity Analysis</div>', unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div class="section-content">
-        <strong>Kenapa Penting?</strong> Struktur kaki yang tidak seimbang dapat menyebabkan tekanan berlebih di area tertentu. Tekanan ini meningkatkan risiko luka, terutama pada titik-titik yang sering menerima beban saat berjalan.
-        <br><strong>Apa yang Diperiksa?</strong>
-        <ul>
-            <li><strong>Tekanan pada Kaki</strong>: Area mana yang menerima tekanan paling besar?</li>
-            <li><strong>Keselarasan Struktur</strong>: Adakah deformitas seperti jari kaki melengkung (hammertoe) atau bunion?</li>
-            <li><strong>Lengkungan Kaki</strong>: Apakah lengkungan terlalu datar atau terlalu tinggi sehingga memengaruhi distribusi tekanan?</li>
-        </ul>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # Penjelasan Rekomendasi
-    st.markdown('<div class="section-title">Mengapa Rekomendasi Kami Terpersonalisasi?</div>', unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div class="section-content">
-        Setiap kaki memiliki cerita yang berbeda. Itulah mengapa rekomendasi kami dirancang secara khusus, berdasarkan kondisi kaki Anda. Kami ingin memastikan solusi yang diberikan benar-benar relevan dan tepat sasaran, membantu Anda menjaga kesehatan kaki dengan langkah yang mudah dan praktis.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # Bagian a. Immediate Actions Required
-    st.markdown('<div class="subsection-title">a. Immediate Actions Required</div>', unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div class="section-content">
-        <strong>Kenapa Penting?</strong> Kadang-kadang, tindakan cepat diperlukan untuk mencegah masalah kecil berkembang menjadi kondisi serius.
-        <br><strong>Contoh Rekomendasi:</strong>
-        <ul>
-            <li>Membersihkan luka kecil dengan antiseptik dan menutupnya dengan balutan steril.</li>
-            <li>Menghindari tekanan langsung pada area yang terluka dengan menggunakan sepatu atau insole khusus.</li>
-            <li>Segera berkonsultasi dengan tenaga medis jika luka tidak sembuh dalam beberapa hari.</li>
-        </ul>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # Bagian b. Daily Care Protocol
-    st.markdown('<div class="subsection-title">b. Daily Care Protocol</div>', unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div class="section-content">
-        <strong>Kenapa Penting?</strong> Rutinitas perawatan sederhana setiap hari dapat mencegah banyak masalah sebelum mereka muncul.
-        <br><strong>Contoh Rekomendasi:</strong>
-        <ul>
-            <li>Membersihkan kaki dengan air hangat, mengeringkan dengan sempurna, terutama di antara jari-jari.</li>
-            <li>Menggunakan pelembap untuk menjaga kulit tetap sehat, tetapi hindari area di antara jari.</li>
-            <li>Memeriksa kaki setiap hari untuk mendeteksi perubahan seperti luka, kemerahan, atau pembengkakan.</li>
-        </ul>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # Bagian c. Risk Prevention Strategy
-    st.markdown('<div class="subsection-title">c. Risk Prevention Strategy</div>', unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div class="section-content">
-        <strong>Kenapa Penting?</strong> Mencegah lebih baik daripada mengobati. Strategi ini membantu Anda mengurangi risiko sebelum masalah muncul.
-        <br><strong>Contoh Rekomendasi:</strong>
-        <ul>
-            <li>Gunakan sepatu yang sesuai dengan ukuran dan bentuk kaki, dengan bantalan yang baik untuk mengurangi tekanan.</li>
-            <li>Hindari berjalan tanpa alas kaki, terutama di permukaan kasar atau panas.</li>
-            <li>Modifikasi aktivitas seperti mengurangi berdiri terlalu lama atau menggunakan alat bantu jika diperlukan.</li>
-        </ul>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # Bagian d. Monitoring Protocol
-    st.markdown('<div class="subsection-title">d. Monitoring Protocol</div>', unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div class="section-content">
-        <strong>Kenapa Penting?</strong> Memantau kondisi kaki secara teratur membantu mendeteksi masalah sejak dini.
-        <br><strong>Contoh Rekomendasi:</strong>
-        <ul>
-            <li>Periksa kaki setiap hari untuk mencari tanda-tanda seperti luka, perubahan warna, atau pembengkakan.</li>
-            <li>Pastikan suhu kaki tidak berbeda drastis antara kaki kanan dan kiri.</li>
-            <li>Lakukan pemeriksaan rutin dengan podiatris setiap 6 bulan.</li>
-        </ul>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # Bagian e. Lifestyle Adjustments
-    st.markdown('<div class="subsection-title">e. Lifestyle Adjustments</div>', unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div class="section-content">
-        <strong>Kenapa Penting?</strong> Perubahan kecil dalam gaya hidup dapat memberikan dampak besar pada kesehatan kaki Anda.
-        <br><strong>Contoh Rekomendasi:</strong>
-        <ul>
-            <li>Lakukan olahraga ringan seperti jalan kaki atau yoga untuk meningkatkan sirkulasi.</li>
-            <li>Konsumsi makanan sehat untuk menjaga kadar gula darah tetap stabil.</li>
-            <li>Hindari rokok dan alkohol, karena dapat memperburuk kerusakan saraf.</li>
-        </ul>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
+    # Interactive Information Sections
+    st.markdown("<br>", unsafe_allow_html=True)
     
+    # Example Image with Caption
+    st.image("DFU.png", caption="Contoh Perkembangan Diabetic Foot Ulcer (DFU)", use_column_width=True)
+
+    # Expandable Sections for Detailed Information
+    with st.expander("🔍 Mengapa Analisis Kaki Penting?"):
+        st.markdown("""
+            <div style="padding: 1rem; background-color: #f8f9fa; border-radius: 0.5rem;">
+                <p style="color: #333; line-height: 1.6;">
+                Kaki adalah indikator kesehatan yang vital bagi penderita diabetes. Perubahan kecil pada kulit, 
+                aliran darah, atau struktur kaki dapat menjadi tanda awal komplikasi serius seperti:
+                </p>
+                <ul style="color: #333; line-height: 1.6;">
+                    <li>Ulkus diabetik</li>
+                    <li>Gangguan sirkulasi</li>
+                    <li>Neuropati diabetik</li>
+                    <li>Infeksi</li>
+                </ul>
+            </div>
+        """, unsafe_allow_html=True)
+
+    # Assessment Categories with Modern Cards
+    st.markdown("<h2 style='text-align: center; color: #0d6efd; margin: 2rem 0;'>Kategori Penilaian</h2>", unsafe_allow_html=True)
+    
+    assessment_categories = {
+        "Kesehatan Kulit": {
+            "icon": "🔍",
+            "description": "Analisis warna, tekstur, dan kondisi kulit kaki secara menyeluruh."
+        },
+        "Indikator Sirkulasi": {
+            "icon": "🌡️",
+            "description": "Pemeriksaan aliran darah dan tanda-tanda gangguan sirkulasi."
+        },
+        "Analisis Deformitas": {
+            "icon": "👣",
+            "description": "Evaluasi struktur kaki dan identifikasi area tekanan berlebih."
+        }
+    }
+    
+    cols = st.columns(3)
+    for idx, (category, info) in enumerate(assessment_categories.items()):
+        with cols[idx]:
+            st.markdown(f"""
+                <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; height: 100%;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">{info['icon']}</div>
+                    <h3 style="color: #0d6efd; font-size: 1.2rem; margin-bottom: 1rem;">{category}</h3>
+                    <p style="color: #666; font-size: 0.9rem;">{info['description']}</p>
+                </div>
+            """, unsafe_allow_html=True)
+
+    # Call-to-Action Section
+    st.markdown("<br><br>", unsafe_allow_html=True)
+    st.markdown("""
+        <div style="padding: 2rem; background: linear-gradient(135deg, #0d6efd15 0%, #0d6efd05 100%); border-radius: 1rem; text-align: center; margin-top: 2rem;">
+            <h2 style="color: #0d6efd; margin-bottom: 1rem;">Mulai Analisis Sekarang</h2>
+            <p style="color: #333; margin-bottom: 1.5rem;">
+                Lakukan pemeriksaan kaki Anda dan dapatkan rekomendasi personal dalam hitungan menit.
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # Footer Information
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("""
+        <div style="text-align: center; color: #666; padding: 2rem 0;">
+            <p>© 2024 Advanced Diabetic Foot Analysis System</p>
+            <p style="font-size: 0.9rem;">Powered by AI & Medical Expertise</p>
+        </div>
+    """, unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)  # Close main-container div
 
 # Function for page 2 (Real-Time Analysis)
