@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import torch
 import openai
@@ -17,6 +18,7 @@ from io import BytesIO
 import tempfile
 import plotly.express as px
 import plotly.graph_objects as go
+
 
 # Page config
 st.set_page_config(
@@ -146,10 +148,12 @@ class MobileNetV3Model(nn.Module):
         x = torch.cat((x_left, x_right), dim=1)
         return self.fc(x)
 
+
+
 # Define functions for each page
 def halaman_1():
     # Hero Section with Custom Styling
-    st.markdown("""
+    components.html("""
         <div style="padding: 2rem; background: linear-gradient(135deg, #0d6efd20 0%, #0d6efd05 100%); border-radius: 1rem; margin-bottom: 2rem;">
             <h1 style="color: #0d6efd; font-size: 2.5rem; font-weight: bold; text-align: center; margin-bottom: 1rem;">
                 Advanced Diabetic Foot Analysis System
@@ -158,46 +162,46 @@ def halaman_1():
                 Selamat datang di platform yang dirancang khusus untuk membantu Anda menjaga kesehatan kaki dengan cara yang modern dan efektif.
             </p>
         </div>
-    """, unsafe_allow_html=True)
+    """, height=250)
 
     # Key Features Section using Columns
-    st.markdown("<h2 style='text-align: center; color: #0d6efd; margin-bottom: 2rem;'>Fitur Utama</h2>", unsafe_allow_html=True)
+    components.html("<h2 style='text-align: center; color: #0d6efd; margin-bottom: 2rem;'>Fitur Utama</h2>", height=60)
     
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.markdown("""
+        components.html("""
             <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
                 <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">🔍 Analisis Real-time</h3>
                 <p style="color: #666;">Deteksi dini risiko komplikasi kaki diabetik menggunakan teknologi AI terkini.</p>
             </div>
-        """, unsafe_allow_html=True)
-        
+        """, height=200)
+            
     with col2:
-        st.markdown("""
+        components.html("""
             <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
                 <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">📊 Visualisasi Data</h3>
                 <p style="color: #666;">Lihat dan pahami kondisi kaki Anda melalui visualisasi data yang mudah dimengerti.</p>
             </div>
-        """, unsafe_allow_html=True)
-        
+        """, height=200)
+            
     with col3:
-        st.markdown("""
+        components.html("""
             <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
                 <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">💡 Rekomendasi Personal</h3>
                 <p style="color: #666;">Dapatkan saran perawatan yang dipersonalisasi berdasarkan hasil analisis.</p>
             </div>
-        """, unsafe_allow_html=True)
-
+        """, height=200)
+    
     # Interactive Information Sections
     st.markdown("<br>", unsafe_allow_html=True)
-    
+        
     # Example Image with Caption
     st.image("DFU.png", caption="Contoh Perkembangan Diabetic Foot Ulcer (DFU)", use_column_width=True)
-
+    
     # Expandable Sections for Detailed Information
     with st.expander("🔍 Mengapa Analisis Kaki Penting?"):
-        st.markdown("""
+        components.html("""
             <div style="padding: 1rem; background-color: #f8f9fa; border-radius: 0.5rem;">
                 <p style="color: #333; line-height: 1.6;">
                 Kaki adalah indikator kesehatan yang vital bagi penderita diabetes. Perubahan kecil pada kulit, 
@@ -210,10 +214,10 @@ def halaman_1():
                     <li>Infeksi</li>
                 </ul>
             </div>
-        """, unsafe_allow_html=True)
-
+        """, height=200)
+    
     # Assessment Categories with Modern Cards
-    st.markdown("<h2 style='text-align: center; color: #0d6efd; margin: 2rem 0;'>Kategori Penilaian</h2>", unsafe_allow_html=True)
+    components.html("<h2 style='text-align: center; color: #0d6efd; margin: 2rem 0;'>Kategori Penilaian</h2>", height=60)
     
     assessment_categories = {
         "Kesehatan Kulit": {
@@ -239,23 +243,23 @@ def halaman_1():
     }
     
     # Create rows of 3 columns each
-    for i in range(0, len(assessment_categories), 3):
+    categories = list(assessment_categories.items())
+    for i in range(0, len(categories), 3):
         cols = st.columns(3)
-        # Get subset of categories for current row
-        current_categories = dict(list(assessment_categories.items())[i:i+3])
+        current_categories = categories[i:i+3]
         
-        for idx, (category, info) in enumerate(current_categories.items()):
+        for idx, (category, info) in enumerate(current_categories):
             with cols[idx]:
-                st.markdown(f"""
+                components.html(f"""
                     <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; height: 100%;">
                         <div style="font-size: 2rem; margin-bottom: 0.5rem;">{info['icon']}</div>
                         <h3 style="color: #0d6efd; font-size: 1.2rem; margin-bottom: 1rem;">{category}</h3>
                         <p style="color: #666; font-size: 0.9rem;">{info['description']}</p>
                     </div>
-                """, unsafe_allow_html=True)
-
+                """, height=250)
+    
     # Personalized Recommendations Section
-    st.markdown("<h2 style='text-align: center; color: #0d6efd; margin: 2rem 0;'>Rekomendasi Personal</h2>", unsafe_allow_html=True)
+    components.html("<h2 style='text-align: center; color: #0d6efd; margin: 2rem 0;'>Rekomendasi Personal</h2>", height=60)
     
     recommendations = {
         "Tindakan Segera": {
@@ -316,7 +320,7 @@ def halaman_1():
     
     for category, info in recommendations.items():
         with st.expander(f"{info['icon']} {category}", expanded=False):
-            st.markdown(f"""
+            components.html(f"""
                 <div style="padding: 1.5rem; background-color: #f8f9fa; border-radius: 1rem;">
                     <div style="display: flex; align-items: center; margin-bottom: 1rem;">
                         <span style="font-size: 1.5rem; margin-right: 0.5rem;">{info['icon']}</span>
@@ -336,30 +340,29 @@ def halaman_1():
                         <p style="color: #333; margin: 0;">{info['dfu_context']}</p>
                     </div>
                 </div>
-            """, unsafe_allow_html=True)
-
+            """, height=400)
+    
     # Visual Separator
-    st.markdown("<hr style='margin: 2rem 0;'>", unsafe_allow_html=True)
-
+    components.html("<hr style='margin: 2rem 0;'>", height=20)
+    
     # Call-to-Action Section
-    st.markdown("<br><br>", unsafe_allow_html=True)
-    st.markdown("""
+    components.html("""
         <div style="padding: 2rem; background: linear-gradient(135deg, #0d6efd15 0%, #0d6efd05 100%); border-radius: 1rem; text-align: center; margin-top: 2rem;">
             <h2 style="color: #0d6efd; margin-bottom: 1rem;">Mulai Analisis Sekarang</h2>
             <p style="color: #333; margin-bottom: 1.5rem;">
                 Lakukan pemeriksaan kaki Anda dan dapatkan rekomendasi personal dalam hitungan menit.
             </p>
         </div>
-    """, unsafe_allow_html=True)
-
+    """, height=250)
+    
     # Footer Information
-    st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown("""
+    components.html("""
         <div style="text-align: center; color: #666; padding: 2rem 0;">
             <p>© 2024 Advanced Diabetic Foot Analysis System</p>
             <p style="font-size: 0.9rem;">Powered by AI & Medical Expertise</p>
         </div>
-    """, unsafe_allow_html=True)
+    """, height=100)
+
     st.markdown('</div>', unsafe_allow_html=True)  # Close main-container div
 
 # Function for page 2 (Real-Time Analysis)
