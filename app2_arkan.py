@@ -15,6 +15,8 @@ from streamlit_option_menu import option_menu
 import base64
 from io import BytesIO
 import tempfile
+import plotly.express as px
+import plotly.graph_objects as go
 
 # Page config
 st.set_page_config(
