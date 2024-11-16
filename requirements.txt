@@ -1,0 +1,9 @@
+streamlit
+torch
+torchvision
+Pillow
+openai
+streamlit_option_menu
+matplotlib
+openpyxl
+seaborn
