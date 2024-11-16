@@ -478,6 +478,17 @@ def halaman_3():
     # Statistik Utama dengan Dua Kolom
     st.markdown("### 📊 Statistik Utama")
     col1, col2 = st.columns(2)
+    if 'Prediction' in df.columns:
+        diabetic_percent = (df['Prediction'] == 'Diabetic').mean() * 100
+    else:
+        diabetic_percent = 0.0
+    
+    if 'Confidence_Value' in df.columns:
+        avg_confidence = df['Confidence_Value'].mean()
+        high_conf = (df['Confidence_Value'] > 95).sum()
+    else:
+        avg_confidence = 0.0
+        high_conf = 0
     
     # Kolom Pertama: Total Pengunjung dan Persentase Diabetic
     with col1:
@@ -494,7 +505,7 @@ def halaman_3():
             """,
             unsafe_allow_html=True
         )
-    
+    diabetic_percent = (df['Prediction'] == 'Diabetic').mean() * 100
     # Kolom Kedua: Confidence Rata-rata dan Confidence >95%
     with col2:
         st.markdown(
