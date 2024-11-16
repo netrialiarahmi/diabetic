@@ -148,53 +148,72 @@ class MobileNetV3Model(nn.Module):
 
 # Define functions for each page
 def halaman_1():
-    # Hero Section
-    st.title("Advanced Diabetic Foot Analysis System")
-    st.subheader("Selamat datang di platform yang dirancang khusus untuk membantu Anda menjaga kesehatan kaki dengan cara yang modern dan efektif.")
-    
-    # Key Features Section
-    st.header("Fitur Utama")
+    # Hero Section with Custom Styling
+    st.markdown("""
+        <div style="padding: 2rem; background: linear-gradient(135deg, #0d6efd20 0%, #0d6efd05 100%); border-radius: 1rem; margin-bottom: 2rem;">
+            <h1 style="color: #0d6efd; font-size: 2.5rem; font-weight: bold; text-align: center; margin-bottom: 1rem;">
+                Advanced Diabetic Foot Analysis System
+            </h1>
+            <p style="font-size: 1.2rem; color: #333; text-align: center; max-width: 800px; margin: 0 auto;">
+                Selamat datang di platform yang dirancang khusus untuk membantu Anda menjaga kesehatan kaki dengan cara yang modern dan efektif.
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # Key Features Section using Columns
+    st.markdown("<h2 style='text-align: center; color: #0d6efd; margin-bottom: 2rem;'>Fitur Utama</h2>", unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.card(
-            title="🔍 Analisis Real-time",
-            body="Deteksi dini risiko komplikasi kaki diabetik menggunakan teknologi AI terkini."
-        )
+        st.markdown("""
+            <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
+                <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">🔍 Analisis Real-time</h3>
+                <p style="color: #666;">Deteksi dini risiko komplikasi kaki diabetik menggunakan teknologi AI terkini.</p>
+            </div>
+        """, unsafe_allow_html=True)
         
     with col2:
-        st.card(
-            title="📊 Visualisasi Data",
-            body="Lihat dan pahami kondisi kaki Anda melalui visualisasi data yang mudah dimengerti."
-        )
+        st.markdown("""
+            <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
+                <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">📊 Visualisasi Data</h3>
+                <p style="color: #666;">Lihat dan pahami kondisi kaki Anda melalui visualisasi data yang mudah dimengerti.</p>
+            </div>
+        """, unsafe_allow_html=True)
         
     with col3:
-        st.card(
-            title="💡 Rekomendasi Personal",
-            body="Dapatkan saran perawatan yang dipersonalisasi berdasarkan hasil analisis."
-        )
+        st.markdown("""
+            <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
+                <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">💡 Rekomendasi Personal</h3>
+                <p style="color: #666;">Dapatkan saran perawatan yang dipersonalisasi berdasarkan hasil analisis.</p>
+            </div>
+        """, unsafe_allow_html=True)
 
-    st.divider()
+    # Interactive Information Sections
+    st.markdown("<br>", unsafe_allow_html=True)
     
-    # Example Image
+    # Example Image with Caption
     st.image("DFU.png", caption="Contoh Perkembangan Diabetic Foot Ulcer (DFU)", use_column_width=True)
 
-    # Information Section
+    # Expandable Sections for Detailed Information
     with st.expander("🔍 Mengapa Analisis Kaki Penting?"):
-        st.write("""
-        Kaki adalah indikator kesehatan yang vital bagi penderita diabetes. 
-        Perubahan kecil pada kulit, aliran darah, atau struktur kaki dapat menjadi tanda awal komplikasi serius seperti:
-        """)
         st.markdown("""
-        - Ulkus diabetik
-        - Gangguan sirkulasi
-        - Neuropati diabetik
-        - Infeksi
-        """)
+            <div style="padding: 1rem; background-color: #f8f9fa; border-radius: 0.5rem;">
+                <p style="color: #333; line-height: 1.6;">
+                Kaki adalah indikator kesehatan yang vital bagi penderita diabetes. Perubahan kecil pada kulit, 
+                aliran darah, atau struktur kaki dapat menjadi tanda awal komplikasi serius seperti:
+                </p>
+                <ul style="color: #333; line-height: 1.6;">
+                    <li>Ulkus diabetik</li>
+                    <li>Gangguan sirkulasi</li>
+                    <li>Neuropati diabetik</li>
+                    <li>Infeksi</li>
+                </ul>
+            </div>
+        """, unsafe_allow_html=True)
 
-    # Assessment Categories
-    st.header("Kategori Penilaian")
+    # Assessment Categories with Modern Cards
+    st.markdown("<h2 style='text-align: center; color: #0d6efd; margin: 2rem 0;'>Kategori Penilaian</h2>", unsafe_allow_html=True)
     
     assessment_categories = {
         "Kesehatan Kulit": {
@@ -211,82 +230,136 @@ def halaman_1():
         },
         "Inspeksi Luka/Ulkus": {
             "icon": "🔬",
-            "description": "Pemeriksaan keberadaan luka, tanda-tanda penyembuhan atau perburukan."
+            "description": "Pemeriksaan keberadaan luka, tanda-tanda penyembuhan atau perburukan, kondisi jaringan sekitar, dan indikator infeksi."
         },
         "Kondisi Kuku": {
             "icon": "💅",
-            "description": "Evaluasi warna, tekstur, dan pola pertumbuhan kuku."
+            "description": "Evaluasi warna, tekstur, pola pertumbuhan, tanda infeksi, dan abnormalitas ketebalan kuku."
         }
     }
     
-    # Create rows of assessment categories
+    # Create rows of 3 columns each
     for i in range(0, len(assessment_categories), 3):
         cols = st.columns(3)
+        # Get subset of categories for current row
         current_categories = dict(list(assessment_categories.items())[i:i+3])
         
         for idx, (category, info) in enumerate(current_categories.items()):
             with cols[idx]:
-                st.card(
-                    title=f"{info['icon']} {category}",
-                    body=info['description']
-                )
+                st.markdown(f"""
+                    <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; height: 100%;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">{info['icon']}</div>
+                        <h3 style="color: #0d6efd; font-size: 1.2rem; margin-bottom: 1rem;">{category}</h3>
+                        <p style="color: #666; font-size: 0.9rem;">{info['description']}</p>
+                    </div>
+                """, unsafe_allow_html=True)
 
-    # Recommendations Section
-    st.header("Rekomendasi Personal")
+    # Personalized Recommendations Section
+    st.markdown("<h2 style='text-align: center; color: #0d6efd; margin: 2rem 0;'>Rekomendasi Personal</h2>", unsafe_allow_html=True)
     
     recommendations = {
         "Tindakan Segera": {
             "icon": "🚨",
-            "description": "Identifikasi kebutuhan perawatan mendesak",
+            "description": "Identifikasi kebutuhan perawatan mendesak dan tindakan medis yang diperlukan",
             "details": [
-                "Evaluasi tingkat kegawatan",
+                "Evaluasi tingkat kegawatan berdasarkan kondisi luka",
                 "Penanganan khusus sesuai tingkat keparahan",
-                "Kebutuhan konsultasi medis"
+                "Kebutuhan konsultasi dengan profesional medis"
             ],
-            "context": "Deteksi dini DFU dapat mencegah amputasi hingga 85% kasus."
+            "dfu_context": "Deteksi dini DFU dapat mencegah amputasi hingga 85% kasus. Tindakan segera saat tanda awal muncul sangat kritis."
         },
-        "Protokol Perawatan": {
+        "Protokol Perawatan Harian": {
             "icon": "🧼",
-            "description": "Panduan perawatan kaki harian",
+            "description": "Panduan perawatan kaki harian yang disesuaikan dengan kondisi Anda",
             "details": [
-                "Prosedur pembersihan yang aman",
-                "Rekomendasi pelembab khusus",
-                "Rutinitas pemeriksaan mandiri"
+                "Prosedur pembersihan yang aman dan efektif",
+                "Rekomendasi pelembab khusus diabetik",
+                "Rutinitas pemeriksaan mandiri",
+                "Metode pengurangan tekanan pada area berisiko"
             ],
-            "context": "Perawatan kaki yang tepat dapat menurunkan risiko DFU sebesar 50%."
+            "dfu_context": "Perawatan kaki yang tepat dapat menurunkan risiko DFU sebesar 50%. Rutinitas harian yang konsisten adalah kunci pencegahan."
         },
-        "Strategi Pencegahan": {
+        "Strategi Pencegahan Risiko": {
             "icon": "🛡️",
-            "description": "Langkah-langkah pencegahan personal",
+            "description": "Langkah-langkah pencegahan yang disesuaikan dengan faktor risiko personal",
             "details": [
-                "Rekomendasi alas kaki khusus",
+                "Rekomendasi alas kaki khusus diabetik",
                 "Penyesuaian aktivitas fisik",
+                "Pertimbangan lingkungan",
                 "Tindakan pencegahan spesifik"
             ],
-            "context": "77% kasus DFU dapat dicegah dengan strategi yang tepat."
+            "dfu_context": "77% kasus DFU dapat dicegah dengan strategi pencegahan yang tepat dan disesuaikan dengan kondisi pasien."
+        },
+        "Protokol Pemantauan": {
+            "icon": "📊",
+            "description": "Sistem pemantauan berkala untuk mencegah komplikasi",
+            "details": [
+                "Checklist pemeriksaan harian",
+                "Tanda-tanda bahaya yang perlu diwaspadai",
+                "Indikator untuk mencari bantuan medis",
+                "Jadwal kontrol rutin"
+            ],
+            "dfu_context": "Pemantauan rutin dapat mendeteksi 89% tanda awal DFU sebelum berkembang menjadi kondisi serius."
+        },
+        "Penyesuaian Gaya Hidup": {
+            "icon": "🌟",
+            "description": "Rekomendasi perubahan gaya hidup untuk mendukung kesehatan kaki",
+            "details": [
+                "Program olahraga yang aman",
+                "Pertimbangan diet khusus",
+                "Modifikasi aktivitas sehari-hari",
+                "Langkah-langkah perlindungan"
+            ],
+            "dfu_context": "Penyesuaian gaya hidup yang tepat dapat menurunkan risiko DFU hingga 60% dan mempercepat proses penyembuhan."
         }
     }
     
     for category, info in recommendations.items():
-        with st.expander(f"{info['icon']} {category}"):
-            st.write(info['description'])
-            
-            st.markdown("**Komponen Utama:**")
-            for detail in info['details']:
-                st.markdown(f"- {detail}")
-            
-            st.info(f"**Kaitan dengan DFU:** {info['context']}")
+        with st.expander(f"{info['icon']} {category}", expanded=False):
+            st.markdown(f"""
+                <div style="padding: 1.5rem; background-color: #f8f9fa; border-radius: 1rem;">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <span style="font-size: 1.5rem; margin-right: 0.5rem;">{info['icon']}</span>
+                        <h3 style="color: #0d6efd; margin: 0;">{category}</h3>
+                    </div>
+                    <p style="color: #333; margin-bottom: 1rem;">{info['description']}</p>
+                    
+                    <div style="margin-top: 1.5rem;">
+                        <h4 style="color: #0d6efd; margin-bottom: 1rem;">Komponen Utama:</h4>
+                        <ul style="color: #333; margin-bottom: 1.5rem; list-style-type: disc; padding-left: 1.5rem;">
+                            {''.join(f'<li style="margin-bottom: 0.5rem;">{detail}</li>' for detail in info['details'])}
+                        </ul>
+                    </div>
+                    
+                    <div style="background-color: #e7f0ff; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem;">
+                        <h4 style="color: #0d6efd; margin-bottom: 0.5rem;">Kaitan dengan DFU:</h4>
+                        <p style="color: #333; margin: 0;">{info['dfu_context']}</p>
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
 
-    st.divider()
+    # Visual Separator
+    st.markdown("<hr style='margin: 2rem 0;'>", unsafe_allow_html=True)
 
-    # Call-to-Action
-    st.header("Mulai Analisis Sekarang")
-    st.write("Lakukan pemeriksaan kaki Anda dan dapatkan rekomendasi personal dalam hitungan menit.")
+    # Call-to-Action Section
+    st.markdown("<br><br>", unsafe_allow_html=True)
+    st.markdown("""
+        <div style="padding: 2rem; background: linear-gradient(135deg, #0d6efd15 0%, #0d6efd05 100%); border-radius: 1rem; text-align: center; margin-top: 2rem;">
+            <h2 style="color: #0d6efd; margin-bottom: 1rem;">Mulai Analisis Sekarang</h2>
+            <p style="color: #333; margin-bottom: 1.5rem;">
+                Lakukan pemeriksaan kaki Anda dan dapatkan rekomendasi personal dalam hitungan menit.
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
 
-    # Footer
-    st.divider()
-    st.caption("© 2024 Advanced Diabetic Foot Analysis System")
-    st.caption("Powered by AI & Medical Expertise")
+    # Footer Information
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("""
+        <div style="text-align: center; color: #666; padding: 2rem 0;">
+            <p>© 2024 Advanced Diabetic Foot Analysis System</p>
+            <p style="font-size: 0.9rem;">Powered by AI & Medical Expertise</p>
+        </div>
+    """, unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)  # Close main-container div
 
 # Function for page 2 (Real-Time Analysis)
