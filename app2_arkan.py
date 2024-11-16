@@ -13,6 +13,8 @@ import torch.nn as nn
 import matplotlib.pyplot as plt
 from streamlit_option_menu import option_menu
 import base64
+from io import BytesIO
+import tempfile
 
 # Page config
 st.set_page_config(
