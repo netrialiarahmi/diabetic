@@ -151,6 +151,8 @@ class MobileNetV3Model(nn.Module):
 
 
 # Define functions for each page
+
+# Define functions for each page
 def halaman_1():
     # Hero Section with Custom Styling
     components.html("""
@@ -159,37 +161,37 @@ def halaman_1():
                 Advanced Diabetic Foot Analysis System
             </h1>
             <p style="font-size: 1.2rem; color: #333; text-align: center; max-width: 800px; margin: 0 auto;">
-                Selamat datang di platform yang dirancang khusus untuk membantu Anda menjaga kesehatan kaki dengan cara yang modern dan efektif.
+                Welcome to a platform specifically designed to help you maintain foot health in a modern and effective way.
             </p>
         </div>
     """, height=250)
     
     # Key Features Section using Columns
-    components.html("<h2 style='text-align: center; color: #0d6efd; margin-bottom: 2rem;'>Fitur Utama</h2>", height=60)
+    components.html("<h2 style='text-align: center; color: #0d6efd; margin-bottom: 2rem;'>Key Features</h2>", height=60)
     
     col1, col2, col3 = st.columns(3)
     
     with col1:
         components.html("""
             <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
-                <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">🔍 Analisis Real-time</h3>
-                <p style="color: #666;">Deteksi dini risiko komplikasi kaki diabetik menggunakan teknologi AI terkini.</p>
+                <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">🔍 Real-time Analysis</h3>
+                <p style="color: #666;">Early detection of diabetic foot complications using the latest AI technology.</p>
             </div>
         """, height=200)
-                
+        
     with col2:
         components.html("""
             <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
-                <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">📊 Visualisasi Data</h3>
-                <p style="color: #666;">Lihat dan pahami kondisi kaki Anda melalui visualisasi data yang mudah dimengerti.</p>
+                <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">📊 Data Visualization</h3>
+                <p style="color: #666;">View and understand your foot condition through easy-to-understand data visualization.</p>
             </div>
         """, height=200)
-                
+        
     with col3:
         components.html("""
             <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
-                <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">💡 Rekomendasi Personal</h3>
-                <p style="color: #666;">Dapatkan saran perawatan yang dipersonalisasi berdasarkan hasil analisis.</p>
+                <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">💡 Personalized Recommendations</h3>
+                <p style="color: #666;">Get personalized care suggestions based on analysis results.</p>
             </div>
         """, height=200)
     
@@ -197,48 +199,47 @@ def halaman_1():
     st.markdown("<br>", unsafe_allow_html=True)
         
     # Example Image with Caption
-    st.image("DFU.png", caption="Contoh Perkembangan Diabetic Foot Ulcer (DFU)", use_column_width=True)
+    st.image("DFU.png", caption="Example of Diabetic Foot Ulcer (DFU) Progression", use_column_width=True)
     
     # Expandable Sections for Detailed Information
-    with st.expander("🔍 Mengapa Analisis Kaki Penting?"):
+    with st.expander("🔍 Why is Foot Analysis Important?"):
         components.html("""
             <div style="padding: 1rem; background-color: #f8f9fa; border-radius: 0.5rem;">
                 <p style="color: #333; line-height: 1.6;">
-                Kaki adalah indikator kesehatan yang vital bagi penderita diabetes. Perubahan kecil pada kulit, 
-                aliran darah, atau struktur kaki dapat menjadi tanda awal komplikasi serius seperti:
+                Feet are vital health indicators for people with diabetes. Small changes in skin, blood flow, or foot structure can be early signs of serious complications such as:
                 </p>
                 <ul style="color: #333; line-height: 1.6;">
-                    <li>Ulkus diabetik</li>
-                    <li>Gangguan sirkulasi</li>
-                    <li>Neuropati diabetik</li>
-                    <li>Infeksi</li>
+                    <li>Diabetic ulcers</li>
+                    <li>Circulatory disorders</li>
+                    <li>Diabetic neuropathy</li>
+                    <li>Infection</li>
                 </ul>
             </div>
         """, height=200)
     
     # Assessment Categories with Modern Cards
-    components.html("<h2 style='text-align: center; color: #0d6efd; margin: 2rem 0;'>Kategori Penilaian</h2>", height=60)
+    components.html("<h2 style='text-align: center; color: #0d6efd; margin: 2rem 0;'>Assessment Categories</h2>", height=60)
     
     assessment_categories = {
-        "Kesehatan Kulit": {
+        "Skin Health": {
             "icon": "🔍",
-            "description": "Analisis warna, tekstur, dan kondisi kulit kaki secara menyeluruh."
+            "description": "Comprehensive analysis of foot skin color, texture, and condition."
         },
-        "Indikator Sirkulasi": {
+        "Circulation Indicators": {
             "icon": "🌡️",
-            "description": "Pemeriksaan aliran darah dan tanda-tanda gangguan sirkulasi."
+            "description": "Examination of blood flow and signs of circulatory disorders."
         },
-        "Analisis Deformitas": {
+        "Deformity Analysis": {
             "icon": "👣",
-            "description": "Evaluasi struktur kaki dan identifikasi area tekanan berlebih."
+            "description": "Evaluation of foot structure and identification of areas with excessive pressure."
         },
-        "Inspeksi Luka/Ulkus": {
+        "Wound/Ulcer Inspection": {
             "icon": "🔬",
-            "description": "Pemeriksaan keberadaan luka, tanda-tanda penyembuhan atau perburukan, kondisi jaringan sekitar, dan indikator infeksi."
+            "description": "Examination for the presence of wounds, signs of healing or deterioration, condition of surrounding tissue, and infection indicators."
         },
-        "Kondisi Kuku": {
+        "Nail Condition": {
             "icon": "💅",
-            "description": "Evaluasi warna, tekstur, pola pertumbuhan, tanda infeksi, dan abnormalitas ketebalan kuku."
+            "description": "Evaluation of nail color, texture, growth patterns, signs of infection, and abnormalities in nail thickness."
         }
     }
     
@@ -259,62 +260,62 @@ def halaman_1():
                 """, height=250)
     
     # Personalized Recommendations Section
-    components.html("<h2 style='text-align: center; color: #0d6efd; margin: 2rem 0;'>Rekomendasi Personal</h2>", height=60)
+    components.html("<h2 style='text-align: center; color: #0d6efd; margin: 2rem 0;'>Personalized Recommendations</h2>", height=60)
     
     recommendations = {
-        "Tindakan Segera": {
+        "Immediate Actions": {
             "icon": "🚨",
-            "description": "Identifikasi kebutuhan perawatan mendesak dan tindakan medis yang diperlukan",
+            "description": "Identify urgent care needs and required medical actions",
             "details": [
-                "Evaluasi tingkat kegawatan berdasarkan kondisi luka",
-                "Penanganan khusus sesuai tingkat keparahan",
-                "Kebutuhan konsultasi dengan profesional medis"
+                "Evaluate urgency level based on wound condition",
+                "Special handling according to severity",
+                "Need for consultation with medical professionals"
             ],
-            "dfu_context": "Deteksi dini DFU dapat mencegah amputasi hingga 85% kasus. Tindakan segera saat tanda awal muncul sangat kritis."
+            "dfu_context": "Early detection of DFU can prevent amputation in up to 85% of cases. Immediate action when early signs appear is critical."
         },
-        "Protokol Perawatan Harian": {
+        "Daily Care Protocol": {
             "icon": "🧼",
-            "description": "Panduan perawatan kaki harian yang disesuaikan dengan kondisi Anda",
+            "description": "Daily foot care guidelines tailored to your condition",
             "details": [
-                "Prosedur pembersihan yang aman dan efektif",
-                "Rekomendasi pelembab khusus diabetik",
-                "Rutinitas pemeriksaan mandiri",
-                "Metode pengurangan tekanan pada area berisiko"
+                "Safe and effective cleaning procedures",
+                "Recommendations for diabetic-specific moisturizers",
+                "Self-examination routines",
+                "Methods to reduce pressure on risk areas"
             ],
-            "dfu_context": "Perawatan kaki yang tepat dapat menurunkan risiko DFU sebesar 50%. Rutinitas harian yang konsisten adalah kunci pencegahan."
+            "dfu_context": "Proper foot care can reduce the risk of DFU by 50%. Consistent daily routines are key to prevention."
         },
-        "Strategi Pencegahan Risiko": {
+        "Risk Prevention Strategies": {
             "icon": "🛡️",
-            "description": "Langkah-langkah pencegahan yang disesuaikan dengan faktor risiko personal",
+            "description": "Preventive steps tailored to personal risk factors",
             "details": [
-                "Rekomendasi alas kaki khusus diabetik",
-                "Penyesuaian aktivitas fisik",
-                "Pertimbangan lingkungan",
-                "Tindakan pencegahan spesifik"
+                "Recommendations for diabetic-specific footwear",
+                "Adjustment of physical activities",
+                "Environmental considerations",
+                "Specific preventive measures"
             ],
-            "dfu_context": "77% kasus DFU dapat dicegah dengan strategi pencegahan yang tepat dan disesuaikan dengan kondisi pasien."
+            "dfu_context": "77% of DFU cases can be prevented with appropriate and personalized prevention strategies."
         },
-        "Protokol Pemantauan": {
+        "Monitoring Protocol": {
             "icon": "📊",
-            "description": "Sistem pemantauan berkala untuk mencegah komplikasi",
+            "description": "Regular monitoring system to prevent complications",
             "details": [
-                "Checklist pemeriksaan harian",
-                "Tanda-tanda bahaya yang perlu diwaspadai",
-                "Indikator untuk mencari bantuan medis",
-                "Jadwal kontrol rutin"
+                "Daily examination checklist",
+                "Warning signs to watch out for",
+                "Indicators to seek medical help",
+                "Routine control schedules"
             ],
-            "dfu_context": "Pemantauan rutin dapat mendeteksi 89% tanda awal DFU sebelum berkembang menjadi kondisi serius."
+            "dfu_context": "Routine monitoring can detect 89% of early DFU signs before developing into serious conditions."
         },
-        "Penyesuaian Gaya Hidup": {
+        "Lifestyle Adjustments": {
             "icon": "🌟",
-            "description": "Rekomendasi perubahan gaya hidup untuk mendukung kesehatan kaki",
+            "description": "Recommendations for lifestyle changes to support foot health",
             "details": [
-                "Program olahraga yang aman",
-                "Pertimbangan diet khusus",
-                "Modifikasi aktivitas sehari-hari",
-                "Langkah-langkah perlindungan"
+                "Safe exercise programs",
+                "Special dietary considerations",
+                "Modifications of daily activities",
+                "Protective measures"
             ],
-            "dfu_context": "Penyesuaian gaya hidup yang tepat dapat menurunkan risiko DFU hingga 60% dan mempercepat proses penyembuhan."
+            "dfu_context": "Appropriate lifestyle adjustments can reduce DFU risk by up to 60% and accelerate the healing process."
         }
     }
     
@@ -329,14 +330,14 @@ def halaman_1():
                     <p style="color: #333; margin-bottom: 1rem;">{info['description']}</p>
                     
                     <div style="margin-top: 1.5rem;">
-                        <h4 style="color: #0d6efd; margin-bottom: 1rem;">Komponen Utama:</h4>
+                        <h4 style="color: #0d6efd; margin-bottom: 1rem;">Main Components:</h4>
                         <ul style="color: #333; margin-bottom: 1.5rem; list-style-type: disc; padding-left: 1.5rem;">
                             {''.join(f'<li style="margin-bottom: 0.5rem;">{detail}</li>' for detail in info['details'])}
                         </ul>
                     </div>
                     
                     <div style="background-color: #e7f0ff; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem;">
-                        <h4 style="color: #0d6efd; margin-bottom: 0.5rem;">Kaitan dengan DFU:</h4>
+                        <h4 style="color: #0d6efd; margin-bottom: 0.5rem;">Relation to DFU:</h4>
                         <p style="color: #333; margin: 0;">{info['dfu_context']}</p>
                     </div>
                 </div>
@@ -348,9 +349,9 @@ def halaman_1():
     # Call-to-Action Section
     components.html("""
         <div style="padding: 2rem; background: linear-gradient(135deg, #0d6efd15 0%, #0d6efd05 100%); border-radius: 1rem; text-align: center; margin-top: 2rem;">
-            <h2 style="color: #0d6efd; margin-bottom: 1rem;">Mulai Analisis Sekarang</h2>
+            <h2 style="color: #0d6efd; margin-bottom: 1rem;">Start Analysis Now</h2>
             <p style="color: #333; margin-bottom: 1.5rem;">
-                Lakukan pemeriksaan kaki Anda dan dapatkan rekomendasi personal dalam hitungan menit.
+                Check your feet and get personalized recommendations in minutes.
             </p>
         </div>
     """, height=250)
@@ -362,6 +363,7 @@ def halaman_1():
             <p style="font-size: 0.9rem;">Powered by AI & Medical Expertise</p>
         </div>
     """, height=100)
+
 
     st.markdown('</div>', unsafe_allow_html=True)  # Close main-container div
 
