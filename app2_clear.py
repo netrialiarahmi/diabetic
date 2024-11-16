@@ -878,6 +878,7 @@ def halaman_3():
         )
     st.markdown('</div>', unsafe_allow_html=True)  # Close main-container div
 # Define the option menu for navigation inside a full-width container
+# Define the option menu for navigation inside a full-width container
 selections = option_menu(
     menu_title=None,
     options=['Home', "Real-Time Analysis", "User Dashboard"],
@@ -909,14 +910,13 @@ selections = option_menu(
             "background-color": "#ffd700",
             "color": "#0d6efd",
             "font-weight": "bold",
-            "border-radius": "8px",  # Slightly smaller radius for a tighter highlight
+            "border-radius": "8px",
             "padding": "10px 15px",
-            "box-shadow": "0px 4px 10px rgba(0, 0, 0, 0.15)",  # Subtle shadow for depth
-            "transition": "background-color 0.3s ease",  # Smooth transition for better UX
+            "box-shadow": "0px 4px 10px rgba(0, 0, 0, 0.15)",
+            "transition": "background-color 0.3s ease",
         }
     }
 )
-
 
 # Page selection
 if selections == "Home":
