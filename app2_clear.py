@@ -253,6 +253,7 @@ def halaman_1():
                         <p style="color: #666; font-size: 0.9rem;">{info['description']}</p>
                     </div>
                 """, unsafe_allow_html=True)
+
     # Personalized Recommendations Section
     st.markdown("<h2 style='text-align: center; color: #0d6efd; margin: 2rem 0;'>Rekomendasi Personal</h2>", unsafe_allow_html=True)
     
@@ -314,26 +315,32 @@ def halaman_1():
     }
     
     for category, info in recommendations.items():
-        with st.expander(f"{info['icon']} {category}"):
+        with st.expander(f"{info['icon']} {category}", expanded=False):
             st.markdown(f"""
                 <div style="padding: 1.5rem; background-color: #f8f9fa; border-radius: 1rem;">
-                    <h3 style="color: #0d6efd; margin-bottom: 1rem;">{category}</h3>
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <span style="font-size: 1.5rem; margin-right: 0.5rem;">{info['icon']}</span>
+                        <h3 style="color: #0d6efd; margin: 0;">{category}</h3>
+                    </div>
                     <p style="color: #333; margin-bottom: 1rem;">{info['description']}</p>
                     
-                    <h4 style="color: #0d6efd; margin-top: 1.5rem;">Komponen Utama:</h4>
-                    <ul style="color: #333; margin-bottom: 1.5rem;">
-                        {' '.join(f'<li>{detail}</li>' for detail in info['details'])}
-                    </ul>
+                    <div style="margin-top: 1.5rem;">
+                        <h4 style="color: #0d6efd; margin-bottom: 1rem;">Komponen Utama:</h4>
+                        <ul style="color: #333; margin-bottom: 1.5rem; list-style-type: disc; padding-left: 1.5rem;">
+                            {''.join(f'<li style="margin-bottom: 0.5rem;">{detail}</li>' for detail in info['details'])}
+                        </ul>
+                    </div>
                     
                     <div style="background-color: #e7f0ff; padding: 1rem; border-radius: 0.5rem; margin-top: 1rem;">
                         <h4 style="color: #0d6efd; margin-bottom: 0.5rem;">Kaitan dengan DFU:</h4>
-                        <p style="color: #333;">{info['dfu_context']}</p>
+                        <p style="color: #333; margin: 0;">{info['dfu_context']}</p>
                     </div>
                 </div>
             """, unsafe_allow_html=True)
 
     # Visual Separator
     st.markdown("<hr style='margin: 2rem 0;'>", unsafe_allow_html=True)
+
     # Call-to-Action Section
     st.markdown("<br><br>", unsafe_allow_html=True)
     st.markdown("""
