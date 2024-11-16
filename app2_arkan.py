@@ -610,6 +610,7 @@ def halaman_3():
     st.plotly_chart(fig_line, use_container_width=True)
 
     # 4. Interactive Data Table
+# 4. Interactive Data Table
     st.markdown("### 📋 Data Detail")
     
     # Add date filter
@@ -622,21 +623,61 @@ def halaman_3():
         max_value=date_max
     )
     
+    # Function to determine risk level based on confidence value and prediction
+    def determine_risk(row):
+        confidence = row['Confidence_Value']
+        prediction = row['Prediction']
+        
+        if prediction == 'Diabetic':
+            if confidence >= 90:
+                return 'High Risk'
+            elif confidence >= 70:
+                return 'Moderate Risk'
+            else:
+                return 'Low Risk'
+        else:  # Non-Diabetic
+            if confidence >= 90:
+                return 'Low Risk'
+            elif confidence >= 70:
+                return 'Low-Moderate Risk'
+            else:
+                return 'Moderate Risk'
+    
     if len(selected_date_range) == 2:
         start_date, end_date = selected_date_range
         mask = (df['Date'].dt.date >= start_date) & (df['Date'].dt.date <= end_date)
         filtered_df = df[mask].copy()
-        filtered_df['Date'] = filtered_df['Date'].dt.strftime('%Y-%m-%d %H:%M:%S')
+        
+        # Add risk level
+        filtered_df['Risk'] = filtered_df.apply(determine_risk, axis=1)
+        
+        # Format date and select only required columns
+        display_df = filtered_df[['Date', 'Prediction', 'Risk']].copy()
+        display_df['Date'] = display_df['Date'].dt.strftime('%Y-%m-%d %H:%M:%S')
+        
+        # Create a color mapping for risk levels
+        risk_colors = {
+            'High Risk': '#ff4444',
+            'Moderate Risk': '#ffbb33',
+            'Low-Moderate Risk': '#99cc00',
+            'Low Risk': '#00C851'
+        }
+        
+        # Apply styling to the dataframe
+        styled_df = display_df.style.apply(lambda x: [
+            f'background-color: {risk_colors[val]};' if col == 'Risk' else '' 
+            for val in x
+        ], axis=1)
+        
         st.dataframe(
-            filtered_df,
+            display_df,
             column_config={
                 "Date": "Tanggal",
                 "Prediction": "Prediksi",
-                "Confidence": "Confidence"
+                "Risk": "Risk Level"
             },
             hide_index=True
         )
-    
     st.markdown('</div>', unsafe_allow_html=True)  # Close main-container div
 # Define the option menu for navigation inside a full-width container
 selections = option_menu(
