@@ -154,6 +154,18 @@ class MobileNetV3Model(nn.Module):
 
 # Define functions for each page
 def halaman_1():
+    # Apply custom font styles
+    st.markdown("""
+        <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Roboto', sans-serif;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    
     # Hero Section with Custom Styling
     components.html("""
         <div style="padding: 2rem; background: linear-gradient(135deg, #0d6efd20 0%, #0d6efd05 100%); border-radius: 1rem; margin-bottom: 2rem;">
@@ -178,7 +190,7 @@ def halaman_1():
                 <p style="color: #666;">Early detection of diabetic foot complications using the latest AI technology.</p>
             </div>
         """, height=200)
-        
+                
     with col2:
         components.html("""
             <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
@@ -186,7 +198,7 @@ def halaman_1():
                 <p style="color: #666;">View and understand your foot condition through easy-to-understand data visualization.</p>
             </div>
         """, height=200)
-        
+                
     with col3:
         components.html("""
             <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
@@ -363,10 +375,8 @@ def halaman_1():
             <p style="font-size: 0.9rem;">Powered by AI & Medical Expertise</p>
         </div>
     """, height=100)
-
-
+    
     st.markdown('</div>', unsafe_allow_html=True)  # Close main-container div
-
 # Function for page 2 (Real-Time Analysis)
 def halaman_2():
     st.markdown('<div class="main-container">', unsafe_allow_html=True)
