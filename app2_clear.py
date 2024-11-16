@@ -180,7 +180,7 @@ def halaman_1():
     
     with col1:
         components.html("""
-            <div style="padding: 2rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
+            <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
                 <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">🔍 Real-time Analysis</h3>
                 <p style="color: #666;">Early detection of diabetic foot complications using the latest AI technology.</p>
             </div>
@@ -188,7 +188,7 @@ def halaman_1():
                 
     with col2:
         components.html("""
-            <div style="padding: 2rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
+            <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
                 <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">📊 Data Visualization</h3>
                 <p style="color: #666;">View and understand your foot condition through easy-to-understand data visualization.</p>
             </div>
@@ -196,7 +196,7 @@ def halaman_1():
                 
     with col3:
         components.html("""
-            <div style="padding: 2rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 100%;">
+            <div style="padding: 1.5rem; background-color: #fff; border-radius: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); height: 150%;">
                 <h3 style="color: #0d6efd; font-size: 1.3rem; margin-bottom: 1rem;">💡 Personalized Recommendations</h3>
                 <p style="color: #666;">Get personalized care suggestions based on analysis results.</p>
             </div>
