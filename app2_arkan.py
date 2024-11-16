@@ -225,7 +225,7 @@ def halaman_2():
         
         try:
             response = client.chat.completions.create(
-                model="gpt-4-vision-preview",
+                model="gpt-4o-mini",
                 messages=[
                     {
                         "role": "system",
