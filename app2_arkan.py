@@ -183,7 +183,7 @@ def halaman_2():
     st.markdown(
         """
         <div class="section-content">
-        This system combines advanced AI models to analyze foot images and provide comprehensive diabetic foot assessments.
+        This system combines advanced AI models and OpenAI Vision to analyze foot images and provide comprehensive diabetic foot assessments.
         Upload clear images of both feet for the most accurate analysis.
         </div>
         """,
@@ -212,6 +212,144 @@ def halaman_2():
         st.image("CG010_M_L-rotated1-rotated1.png", caption="Example: Left Foot Image", use_container_width=True)
     with col2:
         st.image("CG010_M_R-rotated1-rotated1.png", caption="Example: Right Foot Image", use_container_width=True)
+
+    def analyze_image_with_openai(image, context=""):
+        """Analyze image using OpenAI Vision API with improved prompting"""
+        buffered = BytesIO()
+        image.save(buffered, format="JPEG")
+        img_str = base64.b64encode(buffered.getvalue()).decode()
+        
+        client = openai.OpenAI()
+        
+        try:
+            response = client.chat.completions.create(
+                model="gpt-4-vision-preview",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": """You are an expert podiatrist and diabetic foot specialist with extensive experience in diabetic foot pressure maps analysis.
+                        Your analysis should be:
+                        1. Highly detailed and specific
+                        2. Based on visible evidence in the image
+                        3. Focused on diabetic-relevant indicators
+                        4. Professional yet clear
+                        5. Structured and methodical"""
+                    },
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": f"""Please analyze this foot image in detail, focusing on:
+
+1. Skin Health Assessment:
+   - Color variations and patterns
+   - Texture abnormalities
+   - Dryness levels
+   - Any breaks or damages
+   - Presence of calluses
+
+2. Circulation Indicators:
+   - Color distribution patterns
+   - Any signs of reduced blood flow
+   - Presence of swelling
+   - Temperature indicators (if visible)
+
+3. Deformity Analysis:
+   - Foot structure alignment
+   - Pressure point locations
+   - Joint positions and angles
+   - Arch characteristics
+
+4. Wound/Ulcer Inspection:
+   - Presence of any wounds
+   - Signs of healing or deterioration
+   - Surrounding tissue condition
+   - Infection indicators
+
+5. Nail Condition:
+   - Color and texture
+   - Growth patterns
+   - Signs of infection
+   - Thickness abnormalities
+
+Additional Context: {context}"""
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": f"data:image/jpeg;base64,{img_str}"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                max_tokens=1000
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            return f"Error in image analysis: {str(e)}"
+
+    def generate_recommendations(classification_result, left_analysis, right_analysis):
+        """Generate comprehensive recommendations based on analyses"""
+        client = openai.OpenAI()
+        
+        recommendations_prompt = f"""Based on the following detailed foot analyses, provide specific care recommendations:
+
+Classification: {classification_result}
+
+Left Foot Analysis:
+{left_analysis}
+
+Right Foot Analysis:
+{right_analysis}
+
+Please provide detailed recommendations in these categories:
+
+1. Immediate Actions Required:
+   - Urgent care needs
+   - Specific treatments
+   - Professional consultations needed
+
+2. Daily Care Protocol:
+   - Cleaning procedures
+   - Moisturizing recommendations
+   - Inspection routine
+   - Pressure relief methods
+
+3. Risk Prevention Strategy:
+   - Footwear recommendations
+   - Activity modifications
+   - Environmental considerations
+   - Preventive measures
+
+4. Monitoring Protocol:
+   - What to check daily
+   - Warning signs to watch
+   - When to seek immediate care
+   - Follow-up schedule
+
+5. Lifestyle Adjustments:
+   - Exercise recommendations
+   - Dietary considerations
+   - Daily activity modifications
+   - Protective measures"""
+
+        try:
+            response = client.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "You are a senior podiatrist specializing in diabetic foot care. Provide comprehensive, evidence-based recommendations that are practical and actionable."
+                    },
+                    {"role": "user", "content": recommendations_prompt}
+                ],
+                temperature=0.3
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            return f"Error generating recommendations: {str(e)}"
 
     @st.cache_resource
     def load_model():
@@ -261,6 +399,35 @@ def halaman_2():
                         st.metric("Prediction", prediction_label)
                     with results_col2:
                         st.metric("Confidence", f"{prediction_probability:.1f}%")
+
+                    # OpenAI Vision Analysis
+                    st.markdown("### 🔍 Detailed Analysis")
+                    analysis_col1, analysis_col2 = st.columns(2)
+                    
+                    with analysis_col1:
+                        st.markdown("#### Left Foot Analysis")
+                        left_analysis = analyze_image_with_openai(
+                            left_image, 
+                            f"Left foot image. Model prediction: {prediction_label}"
+                        )
+                        st.write(left_analysis)
+                    
+                    with analysis_col2:
+                        st.markdown("#### Right Foot Analysis")
+                        right_analysis = analyze_image_with_openai(
+                            right_image,
+                            f"Right foot image. Model prediction: {prediction_label}"
+                        )
+                        st.write(right_analysis)
+
+                    # Generate and display recommendations
+                    st.markdown("### 💡 Care Recommendations")
+                    recommendations = generate_recommendations(
+                        prediction_label,
+                        left_analysis,
+                        right_analysis
+                    )
+                    st.write(recommendations)
 
                     # Save analysis results to an Excel file
                     data = {
