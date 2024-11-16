@@ -7,3 +7,4 @@ streamlit_option_menu
 matplotlib
 openpyxl
 seaborn
+plotly==5.15.0
