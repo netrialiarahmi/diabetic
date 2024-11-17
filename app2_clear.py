@@ -875,7 +875,7 @@ def page_3():
                 "Risk_Level": "Risk Assessment"
             },
             hide_index=True
-        )ƒ
+        )
     st.markdown('</div>', unsafe_allow_html=True)  # Close main-container div
 # Define the option menu for navigation inside a full-width container
 # Define the option menu for navigation inside a full-width container
