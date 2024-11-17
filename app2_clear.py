@@ -372,108 +372,130 @@ def halaman_1():
     """, height=100)
     
     st.markdown('</div>', unsafe_allow_html=True)  # Close main-container div
-
-# Image preprocessing function
-def preprocess_image(image):
-    transform = transforms.Compose([
-        transforms.Resize((224, 224)),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-    ])
-    return transform(image)
-
-def analyze_image_with_openai(image, context=""):
-    """Analyze image using OpenAI Vision API with detailed medical prompting"""
-    buffered = BytesIO()
-    image.save(buffered, format="JPEG")
-    img_str = base64.b64encode(buffered.getvalue()).decode()
+# Function for page 2 (Real-Time Analysis)
+def halaman_2():
+    st.markdown('<div class="main-container">', unsafe_allow_html=True)
     
-    client = openai.OpenAI()
-    
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4-vision-preview",
-            messages=[
-                {
-                    "role": "system",
-                    "content": """You are an expert podiatrist and diabetic foot specialist with extensive experience in diabetic foot assessment. 
-                    
-Key Analysis Requirements:
-1. Provide direct, clear analysis without disclaimers
-2. Focus on medically relevant observations
-3. Use professional medical terminology while remaining understandable
-4. Structure analysis systematically
-5. Highlight urgent concerns if present"""
-                },
-                {
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "text",
-                            "text": f"""Conduct a comprehensive diabetic foot analysis focusing on these key areas:
+    st.markdown('<div class="main-title">🏥 Advanced Diabetic Foot Analysis System</div>', unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="section-content">
+        This system combines advanced AI models and OpenAI Vision to analyze foot images and provide comprehensive diabetic foot assessments.
+        Upload clear images of both feet for the most accurate analysis.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Add image upload instructions
+    st.markdown(
+        """
+        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; background-color: #f9f9f9; margin-bottom: 20px;">
+            <strong>Instructions for Uploading Images:</strong>
+            <ul style="line-height: 1.6;">
+                <li>Ensure both images are well-lit, clear, and focused.</li>
+                <li>Position your foot on a flat, neutral background (e.g., white or light-colored floor).</li>
+                <li>Take separate images of your <strong>left</strong> and <strong>right</strong> foot from a similar angle.</li>
+                <li>Refer to the example images below to see the correct orientation and positioning for analysis.</li>
+            </ul>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Display example images for guidance
+    col1, col2 = st.columns(2)
+    with col1:
+        st.image("CG010_M_L-rotated1-rotated1.png", caption="Example: Left Foot Image", use_container_width=True)
+    with col2:
+        st.image("CG010_M_R-rotated1-rotated1.png", caption="Example: Right Foot Image", use_container_width=True)
+
+    def analyze_image_with_openai(image, context=""):
+        """Analyze image using OpenAI Vision API with improved prompting"""
+        buffered = BytesIO()
+        image.save(buffered, format="JPEG")
+        img_str = base64.b64encode(buffered.getvalue()).decode()
+        
+        client = openai.OpenAI()
+        
+        try:
+            response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": """You are an expert podiatrist and diabetic foot specialist with extensive experience in diabetic foot pressure maps analysis.
+                    IMPORTANT: Always provide direct analysis of the image shown.
+                    DO NOT start with 'I'm unable to analyze' or similar disclaimers
+                    Your analysis should be:
+                    1. Highly detailed and specific
+                    2. Based on visible evidence in the image
+                    3. Focused on diabetic-relevant indicators
+                    4. Professional yet clear
+                    5. Structured and methodical"""
+                    },
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": f"""Please analyze this foot image in detail, focusing on:
 
 1. Skin Health Assessment:
-   - Coloration patterns and abnormalities
-   - Skin texture and integrity
-   - Presence of dryness or scaling
-   - Evidence of breaks or fissures
-   - Location and severity of calluses
-   - Signs of pressure points
+   - Color variations and patterns
+   - Texture abnormalities
+   - Dryness levels
+   - Any breaks or damages
+   - Presence of calluses
 
-2. Circulation Evaluation:
+2. Circulation Indicators:
    - Color distribution patterns
-   - Evidence of peripheral circulation
-   - Presence of edema or swelling
-   - Temperature variation indicators
-   - Capillary refill indicators
+   - Any signs of reduced blood flow
+   - Presence of swelling
+   - Temperature indicators (if visible)
 
-3. Structural Analysis:
-   - Foot alignment and architecture
-   - Pressure point distribution
-   - Joint positioning and angles
-   - Arch characteristics and abnormalities
-   - Toe positioning and spacing
+3. Deformity Analysis:
+   - Foot structure alignment
+   - Pressure point locations
+   - Joint positions and angles
+   - Arch characteristics
 
-4. Wound/Ulcer Detection:
-   - Presence of active wounds
-   - Signs of previous ulceration
-   - Tissue condition around problem areas
-   - Early warning signs of ulcer formation
+4. Wound/Ulcer Inspection:
+   - Presence of any wounds
+   - Signs of healing or deterioration
+   - Surrounding tissue condition
    - Infection indicators
 
-5. Nail Health Analysis:
-   - Nail color and texture
-   - Growth patterns and deformities
-   - Signs of fungal infection
+5. Nail Condition:
+   - Color and texture
+   - Growth patterns
+   - Signs of infection
    - Thickness abnormalities
-   - Surrounding tissue condition
 
-Additional Clinical Context: {context}
-
-Please provide a structured analysis highlighting any concerning findings and their clinical significance."""
-                        },
-                        {
-                            "type": "image_url",
-                            "image_url": {
-                                "url": f"data:image/jpeg;base64,{img_str}"
+Additional Context: {context}"""
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": f"data:image/jpeg;base64,{img_str}"
+                                }
                             }
-                        }
-                    ]
-                }
-            ],
-            max_tokens=1000
-        )
-        return response.choices[0].message.content
-    except Exception as e:
-        return f"Error in image analysis: {str(e)}"
+                        ]
+                    }
+                ],
+                max_tokens=1000
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            return f"Error in image analysis: {str(e)}"
 
-def generate_recommendations(classification_result, left_analysis, right_analysis):
-    """Generate detailed medical recommendations based on comprehensive analyses"""
-    client = openai.OpenAI()
-    
-    recommendations_prompt = f"""Based on the following diabetic foot analyses, provide evidence-based care recommendations:
+    def generate_recommendations(classification_result, left_analysis, right_analysis):
+        """Generate comprehensive recommendations based on analyses"""
+        client = openai.OpenAI()
+        
+        recommendations_prompt = f"""Based on the following detailed foot analyses, provide specific care recommendations:
 
-Classification Result: {classification_result}
+Classification: {classification_result}
 
 Left Foot Analysis:
 {left_analysis}
@@ -481,232 +503,85 @@ Left Foot Analysis:
 Right Foot Analysis:
 {right_analysis}
 
-Please structure your recommendations in these categories:
+Please provide detailed recommendations in these categories:
 
-1. Urgent Care Requirements:
-   - Immediate medical attention needs
-   - Critical care procedures
-   - Required specialist consultations
-   - Emergency warning signs
+1. Immediate Actions Required:
+   - Urgent care needs
+   - Specific treatments
+   - Professional consultations needed
 
 2. Daily Care Protocol:
-   - Detailed cleaning procedures
-   - Specific moisturizing recommendations
-   - Daily inspection routine
-   - Pressure relief techniques
-   - Proper drying methods
+   - Cleaning procedures
+   - Moisturizing recommendations
+   - Inspection routine
+   - Pressure relief methods
 
-3. Preventive Measures:
-   - Footwear specifications
+3. Risk Prevention Strategy:
+   - Footwear recommendations
    - Activity modifications
-   - Environmental safety measures
-   - Injury prevention strategies
-   - Temperature management
+   - Environmental considerations
+   - Preventive measures
 
-4. Monitoring Guidelines:
-   - Daily self-examination protocol
-   - Critical warning signs
-   - When to seek emergency care
-   - Follow-up schedule recommendations
-   - Progress tracking methods
+4. Monitoring Protocol:
+   - What to check daily
+   - Warning signs to watch
+   - When to seek immediate care
+   - Follow-up schedule
 
-5. Lifestyle Management:
-   - Safe exercise recommendations
+5. Lifestyle Adjustments:
+   - Exercise recommendations
    - Dietary considerations
-   - Daily activity adaptations
-   - Protective measures
-   - Risk reduction strategies"""
+   - Daily activity modifications
+   - Protective measures"""
 
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4",
-            messages=[
-                {
-                    "role": "system",
-                    "content": """You are a senior podiatrist and diabetic care specialist. Provide comprehensive, evidence-based recommendations that are:
-1. Specific and actionable
-2. Prioritized by urgency
-3. Clear and understandable
-4. Supported by current medical evidence
-5. Focused on preventing complications"""
-                },
-                {"role": "user", "content": recommendations_prompt}
-            ],
-            temperature=0.3
-        )
-        return response.choices[0].message.content
-    except Exception as e:
-        return f"Error generating recommendations: {str(e)}"
+        try:
+            response = client.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "You are a senior podiatrist specializing in diabetic foot care. Provide comprehensive, evidence-based recommendations that are practical and actionable."
+                    },
+                    {"role": "user", "content": recommendations_prompt}
+                ],
+                temperature=0.3
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            return f"Error generating recommendations: {str(e)}"
 
-def halaman_2():
-    # Page configuration
-    st.set_page_config(page_title="Diabetic Foot Analysis System", layout="wide")
+    @st.cache_resource
+    def load_model():
+        model = MobileNetV3Model()
+        model.load_state_dict(torch.load('mobilenet_v3_model.pth', weights_only=True), strict=False)
+        model.eval()
+        return model
 
-    # Custom CSS
-    st.markdown("""
-        <style>
-        .main-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            text-align: center;
-            color: #2c3e50;
-            padding: 1.5rem 0;
-            margin-bottom: 2rem;
-            background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
-            border-radius: 10px;
-        }
-        
-        .section-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #34495e;
-            padding: 1rem 0;
-            border-bottom: 2px solid #3498db;
-            margin-bottom: 1.5rem;
-        }
-        
-        .info-box {
-            background-color: #f8f9fa;
-            border-left: 4px solid #3498db;
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 0 5px 5px 0;
-        }
-        
-        .step-container {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 1.5rem;
-        }
-        
-        .result-card {
-            background: #ffffff;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin: 1rem 0;
-        }
-        
-        .highlight-text {
-            color: #3498db;
-            font-weight: bold;
-        }
+    model = load_model()
 
-        .stButton>button {
-            background-color: #3498db;
-            color: white;
-            padding: 0.5rem 2rem;
-            font-size: 1.1rem;
-            border-radius: 5px;
-            border: none;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
-        }
-
-        .stButton>button:hover {
-            background-color: #2980b9;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .upload-section {
-            border: 2px dashed #3498db;
-            border-radius: 10px;
-            padding: 2rem;
-            text-align: center;
-            margin: 1rem 0;
-        }
-
-        .analysis-section {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 10px;
-            margin: 2rem 0;
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
-    # Main Title
-    st.markdown('<div class="main-title">🏥 Advanced Diabetic Foot Analysis System</div>', unsafe_allow_html=True)
-
-    # Introduction
-    st.markdown("""
-        <div class="info-box">
-            <h3>📋 About the System</h3>
-            <p>Welcome to our advanced diabetic foot analysis system. This platform combines state-of-the-art AI technology 
-            with medical expertise to provide comprehensive foot health assessments. The system analyzes your foot images 
-            to detect potential diabetic complications and offers personalized care recommendations.</p>
-        </div>
-    """, unsafe_allow_html=True)
-
-    # Image Upload Instructions
-    st.markdown('<div class="section-title">📸 Image Upload Guidelines</div>', unsafe_allow_html=True)
-    st.markdown("""
-        <div class="step-container">
-            <h4>For Optimal Results:</h4>
-            <ul>
-                <li>✅ Ensure good lighting conditions</li>
-                <li>✅ Place feet against a plain, light-colored background</li>
-                <li>✅ Take photos from a consistent angle</li>
-                <li>✅ Include the entire foot in the frame</li>
-                <li>✅ Make sure images are clear and in focus</li>
-            </ul>
-        </div>
-    """, unsafe_allow_html=True)
-
-    # Example Images
-    st.markdown('<div class="section-title">📊 Reference Images</div>', unsafe_allow_html=True)
     col1, col2 = st.columns(2)
-    with col1:
-        st.image("CG010_M_L-rotated1-rotated1.png", caption="Example: Left Foot Position", use_container_width=True)
-    with col2:
-        st.image("CG010_M_R-rotated1-rotated1.png", caption="Example: Right Foot Position", use_container_width=True)
-
-    # Image Upload Section
-    st.markdown('<div class="section-title">📤 Upload Your Images</div>', unsafe_allow_html=True)
     
-    upload_col1, upload_col2 = st.columns(2)
-    with upload_col1:
-        st.markdown('<div class="upload-section">', unsafe_allow_html=True)
+    with col1:
+        st.subheader("Upload Left Foot Image")
         uploaded_left_image = st.file_uploader("Upload Left Foot Image", type=["jpg", "png", "jpeg"])
         if uploaded_left_image:
             st.image(uploaded_left_image, caption="Left Foot Image", use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
 
-    with upload_col2:
-        st.markdown('<div class="upload-section">', unsafe_allow_html=True)
+    with col2:
+        st.subheader("Upload Right Foot Image")
         uploaded_right_image = st.file_uploader("Upload Right Foot Image", type=["jpg", "png", "jpeg"])
         if uploaded_right_image:
             st.image(uploaded_right_image, caption="Right Foot Image", use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
 
-    # Analysis Button and Processing
     if uploaded_left_image and uploaded_right_image:
-        st.markdown("""
-            <div style="text-align: center; padding: 20px;">
-                <div style="display: inline-block;">
-            </div>
-            """, unsafe_allow_html=True)
-        
-        if st.button("🔍 Start Comprehensive Analysis", key="analyze_button"):
-            with st.spinner("🔄 Processing Images... Please wait while we analyze your foot images..."):
+        if st.button("Analyze Images", key="analyze_button"):
+            with st.spinner("Analyzing images... Please wait."):
                 try:
-                    # Load model
-                    @st.cache_resource
-                    def load_model():
-                        model = MobileNetV3Model()
-                        model.load_state_dict(torch.load('mobilenet_v3_model.pth', weights_only=True), strict=False)
-                        model.eval()
-                        return model
-
-                    model = load_model()
-
-                    # Process images
+                    # Reset file pointers to read images for processing
                     left_image = Image.open(uploaded_left_image)
                     right_image = Image.open(uploaded_right_image)
 
-                    # Model prediction
+                    # Preprocess images for the model
                     left_tensor = preprocess_image(left_image).unsqueeze(0)
                     right_tensor = preprocess_image(right_image).unsqueeze(0)
 
@@ -717,65 +592,60 @@ def halaman_2():
                     prediction_label = "Diabetic" if is_diabetic else "Non-Diabetic"
                     prediction_probability = torch.sigmoid(prediction).item() * 100
 
-                    # Display Results
-                    st.markdown('<div class="section-title">🎯 Analysis Results</div>', unsafe_allow_html=True)
-                    st.markdown('<div class="result-card">', unsafe_allow_html=True)
-                    
-                    result_col1, result_col2 = st.columns(2)
-                    with result_col1:
-                        st.metric(
-                            "Classification", 
-                            prediction_label,
-                            delta="High Confidence" if prediction_probability > 80 else "Moderate Confidence"
-                        )
-                    with result_col2:
-                        st.metric(
-                            "Confidence Score", 
-                            f"{prediction_probability:.1f}%"
-                        )
-                    
-                    st.markdown('</div>', unsafe_allow_html=True)
+                    st.markdown('<div class="section-title">📊 Classification Results</div>', unsafe_allow_html=True)
+                    results_col1, results_col2 = st.columns(2)
+                    with results_col1:
+                        st.metric("Prediction", prediction_label)
+                    with results_col2:
+                        st.metric("Confidence", f"{prediction_probability:.1f}%")
 
-                    # Detailed Analysis
-                    st.markdown('<div class="section-title">🔬 Detailed Analysis</div>', unsafe_allow_html=True)
-                    
+                    # OpenAI Vision Analysis
+                    st.markdown("### 🔍 Detailed Analysis")
                     analysis_col1, analysis_col2 = st.columns(2)
+                    
                     with analysis_col1:
-                        st.markdown('<div class="result-card">', unsafe_allow_html=True)
                         st.markdown("#### Left Foot Analysis")
                         left_analysis = analyze_image_with_openai(
-                            left_image,
-                            f"Left foot image. Classification: {prediction_label}"
+                            left_image, 
+                            f"Left foot image. Model prediction: {prediction_label}"
                         )
-                        st.markdown(left_analysis)
-                        st.markdown('</div>', unsafe_allow_html=True)
+                        st.write(left_analysis)
                     
                     with analysis_col2:
-                        st.markdown('<div class="result-card">', unsafe_allow_html=True)
                         st.markdown("#### Right Foot Analysis")
                         right_analysis = analyze_image_with_openai(
                             right_image,
-                            f"Right foot image. Classification: {prediction_label}"
+                            f"Right foot image. Model prediction: {prediction_label}"
                         )
-                        st.markdown(right_analysis)
-                        st.markdown('</div>', unsafe_allow_html=True)
+                        st.write(right_analysis)
 
-                    # Recommendations
-                    st.markdown('<div class="section-title">💡 Personalized Care Recommendations</div>', unsafe_allow_html=True)
-                    st.markdown('<div class="result-card">', unsafe_allow_html=True)
+                    # Generate and display recommendations
+                    st.markdown("### 💡 Care Recommendations")
                     recommendations = generate_recommendations(
                         prediction_label,
                         left_analysis,
                         right_analysis
                     )
-                    st.markdown(recommendations)
-                    st.markdown('</div>', unsafe_allow_html=True)
+                    st.write(recommendations)
 
-                    # Save Results
+                    # Save analysis results to an Excel file
                     data = {
                         "Date": [str(pd.Timestamp.now())],
                         "Prediction": [prediction_label],
-                        "Confidence": [f"{prediction_probability:.1f}%
+                        "Confidence": [f"{prediction_probability:.1f}%"]
+                    }
+                    df = pd.DataFrame(data)
+                    
+                    # Load or create analysis log
+                    log_file = "analysis_log.xlsx"
+                    if os.path.exists(log_file):
+                        df_existing = pd.read_excel(log_file)
+                        df = pd.concat([df_existing, df], ignore_index=True)
+                    
+                    df.to_excel(log_file, index=False)
+
+                except Exception as e:
+                    st.error(f"An error occurred during analysis: {str(e)}")
     
     st.markdown('</div>', unsafe_allow_html=True)  # Close main-container div
 
