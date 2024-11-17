@@ -649,7 +649,7 @@ Please provide detailed recommendations in these categories:
     
     st.markdown('</div>', unsafe_allow_html=True)  # Close main-container div
 
-def page_3():
+def halaman_3():
     # Apply custom CSS for better styling
     st.markdown("""
         <style>
