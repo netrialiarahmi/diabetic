@@ -649,128 +649,146 @@ Please provide detailed recommendations in these categories:
     
     st.markdown('</div>', unsafe_allow_html=True)  # Close main-container div
 
-def halaman_3():
-    st.markdown('<div class="main-container">', unsafe_allow_html=True)
-    
-    st.markdown('<div class="main-title">Ringkasan Data Analisis</div>', unsafe_allow_html=True)
+def page_3():
+    # Apply custom CSS for better styling
+    st.markdown("""
+        <style>
+        .dashboard-title {
+            text-align: center;
+            padding: 20px;
+            color: #2c3e50;
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            border-radius: 10px;
+        }
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .section-title {
+            color: #2c3e50;
+            border-left: 5px solid #3498db;
+            padding-left: 10px;
+            margin: 30px 0 20px 0;
+        }
+        </style>
+    """, unsafe_allow_html=True)
 
-    # Read the Excel file
+    # Dashboard Title
+    st.markdown('<div class="dashboard-title">Analytics Dashboard</div>', unsafe_allow_html=True)
+
+    # Read and validate data
     log_file = "analysis_log.xlsx"
     if not os.path.exists(log_file):
-        st.warning("Belum ada data analisis yang tersedia.")
+        st.error("⚠️ No analysis data available. Please perform some predictions first.")
         return
 
+    # Load and process data
     df = pd.read_excel(log_file)
-    
-    # Convert Date column to datetime
     df['Date'] = pd.to_datetime(df['Date'])
-    
-    # Process Confidence column to numeric
     df['Confidence_Value'] = df['Confidence'].str.rstrip('%').astype(float)
 
-    # Statistik Utama dengan Dua Kolom
-    st.markdown("### 📊 Statistik Utama")
-    col1, col2 = st.columns(2)
-    if 'Prediction' in df.columns:
-        diabetic_percent = (df['Prediction'] == 'Diabetic').mean() * 100
-    else:
-        diabetic_percent = 0.0
+    # Key Metrics Section
+    st.markdown('<h2 class="section-title">📊 Key Performance Metrics</h2>', unsafe_allow_html=True)
     
-    if 'Confidence_Value' in df.columns:
-        avg_confidence = df['Confidence_Value'].mean()
-        high_conf = (df['Confidence_Value'] > 95).sum()
-    else:
-        avg_confidence = 0.0
-        high_conf = 0
+    col1, col2, col3, col4 = st.columns(4)
     
-    # Kolom Pertama: Total Pengunjung dan Persentase Diabetic
-    with col1:
-        st.markdown(
-            f"""
-            <div style="padding: 15px; margin-bottom: 20px; border-radius: 10px; background-color: #f0f2f6; text-align: center;">
-                <h3 style="margin: 0; color: #1f77b4;">Total Pengunjung</h3>
-                <p style="font-size: 24px; margin: 10px 0;">{len(df)}</p>
-            </div>
-            <div style="padding: 15px; margin-bottom: 20px; border-radius: 10px; background-color: #f0f2f6; text-align: center;">
-                <h3 style="margin: 0; color: #ff7f0e;">Persentase Diabetic</h3>
-                <p style="font-size: 24px; margin: 10px 0;">{diabetic_percent:.1f}%</p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+    # Calculate metrics
+    total_predictions = len(df)
     diabetic_percent = (df['Prediction'] == 'Diabetic').mean() * 100
-    # Kolom Kedua: Confidence Rata-rata dan Confidence >95%
-    with col2:
-        st.markdown(
-            f"""
-            <div style="padding: 15px; margin-bottom: 20px; border-radius: 10px; background-color: #f0f2f6; text-align: center;">
-                <h3 style="margin: 0; color: #2ca02c;">Confidence Rata-rata</h3>
-                <p style="font-size: 24px; margin: 10px 0;">{avg_confidence:.1f}%</p>
-            </div>
-            <div style="padding: 15px; margin-bottom: 20px; border-radius: 10px; background-color: #f0f2f6; text-align: center;">
-                <h3 style="margin: 0; color: #d62728;">Confidence >95%</h3>
-                <p style="font-size: 24px; margin: 10px 0;">{high_conf}</p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+    avg_confidence = df['Confidence_Value'].mean()
+    high_risk_cases = ((df['Prediction'] == 'Diabetic') & (df['Confidence_Value'] > 90)).sum()
 
+    # Display metrics with enhanced styling
+    metrics = [
+        (col1, "Total Predictions", total_predictions, "👥"),
+        (col2, "Diabetic Cases", f"{diabetic_percent:.1f}%", "🏥"),
+        (col3, "Avg. Confidence", f"{avg_confidence:.1f}%", "📈"),
+        (col4, "High Risk Cases", high_risk_cases, "⚠️")
+    ]
 
-    # 2. Advanced Visualizations Section
-    st.markdown("### 📈 Visualisasi Data")
+    for col, title, value, icon in metrics:
+        with col:
+            st.markdown(f"""
+                <div class="stat-card">
+                    <h3 style="font-size: 1.1em; color: #7f8c8d;">{title}</h3>
+                    <div style="font-size: 1.8em; color: #2c3e50; margin: 10px 0;">{icon} {value}</div>
+                </div>
+            """, unsafe_allow_html=True)
+
+    # Advanced Visualizations Section
+    st.markdown('<h2 class="section-title">📈 Advanced Analytics</h2>', unsafe_allow_html=True)
     
-    # Create two columns for charts
     chart_col1, chart_col2 = st.columns(2)
     
     with chart_col1:
-        st.markdown("#### Distribusi Prediksi")
-        fig_pie = {
+        # Enhanced Prediction Distribution
+        fig_donut = {
             "data": [{
                 "values": df['Prediction'].value_counts().values,
                 "labels": df['Prediction'].value_counts().index,
                 "type": "pie",
-                "hole": 0.4,
-                "marker": {"colors": ["#ff7f0e", "#1f77b4"]}
+                "hole": 0.6,
+                "marker": {
+                    "colors": ["#FF6B6B", "#4ECDC4"],
+                    "line": {"color": "#ffffff", "width": 2}
+                },
+                "textinfo": "label+percent",
+                "hoverinfo": "label+value+percent"
             }],
             "layout": {
+                "title": "Prediction Distribution",
                 "showlegend": True,
-                "legend": {"orientation": "h"},
+                "legend": {"orientation": "h", "y": -0.1},
                 "annotations": [{
-                    "text": "Distribusi<br>Total",
+                    "text": "Distribution<br>Analysis",
                     "showarrow": False,
-                    "font": {"size": 14}
+                    "font": {"size": 14, "color": "#2c3e50"}
                 }]
             }
         }
-        st.plotly_chart(fig_pie, use_container_width=True)
+        st.plotly_chart(fig_donut, use_container_width=True)
 
     with chart_col2:
-        st.markdown("#### Distribusi Confidence")
-        # Create confidence bins
-        bins = [0, 50, 75, 95, 100]
-        labels = ['0-50%', '51-75%', '76-95%', '>95%']
-        df['Confidence_Bin'] = pd.cut(df['Confidence_Value'], bins=bins, labels=labels, right=True)
-        confidence_dist = df['Confidence_Bin'].value_counts().sort_index()
+        # Enhanced Confidence Distribution
+        bins = [0, 60, 75, 90, 100]
+        labels = ['Low (<60%)', 'Moderate (60-75%)', 'High (75-90%)', 'Very High (>90%)']
+        df['Confidence_Range'] = pd.cut(df['Confidence_Value'], bins=bins, labels=labels)
+        confidence_dist = df['Confidence_Range'].value_counts().sort_index()
         
         fig_bar = {
             "data": [{
                 "x": confidence_dist.index,
                 "y": confidence_dist.values,
                 "type": "bar",
-                "marker": {"color": "#2ca02c"}
+                "marker": {
+                    "color": ["#FFE66D", "#FF9999", "#FF6B6B", "#4ECDC4"],
+                    "line": {"color": "#ffffff", "width": 1.5}
+                },
+                "hovertemplate": "<b>%{x}</b><br>Count: %{y}<extra></extra>"
             }],
             "layout": {
-                "xaxis": {"title": "Confidence Range"},
-                "yaxis": {"title": "Number of Predictions"},
-                "showlegend": False
+                "title": "Confidence Level Distribution",
+                "xaxis": {"title": "Confidence Range", "tickangle": -45},
+                "yaxis": {"title": "Number of Cases"},
+                "showlegend": False,
+                "bargap": 0.2
             }
         }
         st.plotly_chart(fig_bar, use_container_width=True)
 
-    # 3. Time Series Analysis
-    st.markdown("### 📅 Analisis Waktu")
+    # Time Series Analysis
+    st.markdown('<h2 class="section-title">📅 Trend Analysis</h2>', unsafe_allow_html=True)
     
-    # Prepare time series data
+    # Enhanced time series visualization
     df['Date_Only'] = df['Date'].dt.date
     time_series = df.groupby(['Date_Only', 'Prediction']).size().unstack(fill_value=0)
     
@@ -779,98 +797,85 @@ def halaman_3():
             {
                 "x": time_series.index,
                 "y": time_series['Diabetic'] if 'Diabetic' in time_series.columns else [],
-                "name": "Diabetic",
+                "name": "Diabetic Cases",
                 "type": "scatter",
                 "mode": "lines+markers",
-                "marker": {"color": "#ff7f0e"}
+                "marker": {"color": "#FF6B6B", "size": 8},
+                "line": {"width": 3}
             },
             {
                 "x": time_series.index,
                 "y": time_series['Non-Diabetic'] if 'Non-Diabetic' in time_series.columns else [],
-                "name": "Non-Diabetic",
+                "name": "Non-Diabetic Cases",
                 "type": "scatter",
                 "mode": "lines+markers",
-                "marker": {"color": "#1f77b4"}
+                "marker": {"color": "#4ECDC4", "size": 8},
+                "line": {"width": 3}
             }
         ],
         "layout": {
-            "xaxis": {"title": "Date"},
-            "yaxis": {"title": "Number of Predictions"},
-            "legend": {"orientation": "h"},
-            "hovermode": "x unified"
+            "title": "Daily Prediction Trends",
+            "xaxis": {"title": "Date", "gridcolor": "#f0f0f0"},
+            "yaxis": {"title": "Number of Cases", "gridcolor": "#f0f0f0"},
+            "legend": {"orientation": "h", "y": -0.2},
+            "hovermode": "x unified",
+            "plot_bgcolor": "white",
+            "paper_bgcolor": "white"
         }
     }
     st.plotly_chart(fig_line, use_container_width=True)
 
-    # 4. Interactive Data Table
-# 4. Interactive Data Table
-    st.markdown("### 📋 Data Detail")
+    # Interactive Data Table Section
+    st.markdown('<h2 class="section-title">📋 Detailed Analysis Records</h2>', unsafe_allow_html=True)
     
-    # Add date filter
-    date_min = df['Date'].min().date()
-    date_max = df['Date'].max().date()
-    selected_date_range = st.date_input(
-        "Pilih Rentang Tanggal",
-        value=(date_min, date_max),
-        min_value=date_min,
-        max_value=date_max
-    )
+    # Date range selector with better styling
+    date_col1, date_col2 = st.columns([3, 1])
+    with date_col1:
+        selected_date_range = st.date_input(
+            "Select Date Range",
+            value=(df['Date'].min().date(), df['Date'].max().date()),
+            min_value=df['Date'].min().date(),
+            max_value=df['Date'].max().date()
+        )
     
-    # Function to determine risk level based on confidence value and prediction
-    def determine_risk(row):
+    def calculate_risk_score(row):
         confidence = row['Confidence_Value']
         prediction = row['Prediction']
         
         if prediction == 'Diabetic':
-            if confidence >= 90:
-                return 'High Risk'
-            elif confidence >= 70:
-                return 'Moderate Risk'
-            else:
-                return 'Low Risk'
-        else:  # Non-Diabetic
-            if confidence >= 90:
-                return 'Low Risk'
-            elif confidence >= 70:
-                return 'Low-Moderate Risk'
-            else:
-                return 'Moderate Risk'
-    
+            if confidence >= 90: return ('High Risk', '#FF4444')
+            elif confidence >= 75: return ('Moderate Risk', '#FFA000')
+            else: return ('Low Risk', '#4CAF50')
+        else:
+            if confidence >= 90: return ('Minimal Risk', '#2196F3')
+            elif confidence >= 75: return ('Low Risk', '#4CAF50')
+            else: return ('Follow-up Recommended', '#FFA000')
+
     if len(selected_date_range) == 2:
         start_date, end_date = selected_date_range
-        mask = (df['Date'].dt.date >= start_date) & (df['Date'].dt.date <= end_date)
-        filtered_df = df[mask].copy()
+        filtered_df = df[(df['Date'].dt.date >= start_date) & 
+                        (df['Date'].dt.date <= end_date)].copy()
         
-        # Add risk level
-        filtered_df['Risk'] = filtered_df.apply(determine_risk, axis=1)
+        # Add risk assessment
+        filtered_df['Risk_Info'] = filtered_df.apply(calculate_risk_score, axis=1)
+        filtered_df['Risk_Level'] = filtered_df['Risk_Info'].apply(lambda x: x[0])
+        filtered_df['Risk_Color'] = filtered_df['Risk_Info'].apply(lambda x: x[1])
         
-        # Format date and select only required columns
-        display_df = filtered_df[['Date', 'Prediction', 'Risk']].copy()
+        # Prepare display dataframe
+        display_df = filtered_df[['Date', 'Prediction', 'Confidence_Value', 'Risk_Level']].copy()
         display_df['Date'] = display_df['Date'].dt.strftime('%Y-%m-%d %H:%M:%S')
-        
-        # Create a color mapping for risk levels
-        risk_colors = {
-            'High Risk': '#ff4444',
-            'Moderate Risk': '#ffbb33',
-            'Low-Moderate Risk': '#99cc00',
-            'Low Risk': '#00C851'
-        }
-        
-        # Apply styling to the dataframe
-        styled_df = display_df.style.apply(lambda x: [
-            f'background-color: {risk_colors[val]};' if col == 'Risk' else '' 
-            for val in x
-        ], axis=1)
+        display_df['Confidence_Value'] = display_df['Confidence_Value'].apply(lambda x: f"{x:.1f}%")
         
         st.dataframe(
             display_df,
             column_config={
-                "Date": "Tanggal",
-                "Prediction": "Prediksi",
-                "Risk": "Risk Level"
+                "Date": "Timestamp",
+                "Prediction": "Diagnosis",
+                "Confidence_Value": "Confidence",
+                "Risk_Level": "Risk Assessment"
             },
             hide_index=True
-        )
+        )ƒ
     st.markdown('</div>', unsafe_allow_html=True)  # Close main-container div
 # Define the option menu for navigation inside a full-width container
 # Define the option menu for navigation inside a full-width container
